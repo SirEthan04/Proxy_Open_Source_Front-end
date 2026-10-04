@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product-list',
@@ -19,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatPaginatorModule,
   ],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
@@ -39,6 +41,9 @@ export class ProductList {
     'status',
     'actions',
   ];
+  readonly pageIndex = signal(0);
+  readonly pageSize = signal(5);
+
   readonly filteredProducts = computed(() => {
     const term = this.searchTerm().trim().toLowerCase();
 
@@ -64,6 +69,14 @@ export class ProductList {
     });
   });
 
+  readonly paginatedProducts = computed(() => {
+    const start = this.pageIndex() * this.pageSize();
+
+    const end = start + this.pageSize();
+
+    return this.filteredProducts().slice(start, end);
+  });
+
   getCategoryName(categoryId: number): string {
     const category = this.categories().find((category) => category.id === categoryId);
 
@@ -76,5 +89,23 @@ export class ProductList {
 
   onDelete(product: Product): void {
     this.remove.emit(product);
+  }
+  onPageChange(event: PageEvent): void {
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+  }
+  onSearchChange(value: string): void {
+    this.searchTerm.set(value);
+    this.pageIndex.set(0);
+  }
+
+  onCategoryChange(value: number): void {
+    this.selectedCategoryId.set(value);
+    this.pageIndex.set(0);
+  }
+
+  onStatusChange(value: string): void {
+    this.selectedStatus.set(value);
+    this.pageIndex.set(0);
   }
 }
