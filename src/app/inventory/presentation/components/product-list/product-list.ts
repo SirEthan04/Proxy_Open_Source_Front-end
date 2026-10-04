@@ -7,6 +7,7 @@ import { Component, computed, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-product-list',
@@ -17,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
   ],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
@@ -27,7 +29,8 @@ export class ProductList {
   readonly searchTerm = signal('');
   readonly edit = output<Product>();
   readonly remove = output<Product>();
-
+  readonly selectedCategoryId = signal<number>(0);
+  readonly selectedStatus = signal<string>('all');
   readonly displayedColumns: string[] = [
     'name',
     'category',
@@ -39,16 +42,26 @@ export class ProductList {
   readonly filteredProducts = computed(() => {
     const term = this.searchTerm().trim().toLowerCase();
 
-    if (!term) {
-      return this.products();
-    }
+    const categoryId = this.selectedCategoryId();
 
-    return this.products().filter(
-      (product) =>
+    const status = this.selectedStatus();
+
+    return this.products().filter((product) => {
+      const matchesSearch =
+        !term ||
         product.name.toLowerCase().includes(term) ||
         product.description.toLowerCase().includes(term) ||
-        this.getCategoryName(product.categoryId).toLowerCase().includes(term),
-    );
+        this.getCategoryName(product.categoryId).toLowerCase().includes(term);
+
+      const matchesCategory = categoryId === 0 || product.categoryId === categoryId;
+
+      const matchesStatus =
+        status === 'all' ||
+        (status === 'active' && product.active) ||
+        (status === 'inactive' && !product.active);
+
+      return matchesSearch && matchesCategory && matchesStatus;
+    });
   });
 
   getCategoryName(categoryId: number): string {

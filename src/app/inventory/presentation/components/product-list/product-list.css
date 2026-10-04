@@ -59,7 +59,28 @@
 .table-tools {
   display: flex;
   align-items: center;
+  gap: 16px;
   margin-bottom: 16px;
+}
+
+.search-field {
+  flex: 1;
+}
+
+.filter-field {
+  width: 200px;
+}
+
+@media (max-width: 768px) {
+  .table-tools {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-field,
+  .filter-field {
+    width: 100%;
+  }
 }
 
 .search-field {
