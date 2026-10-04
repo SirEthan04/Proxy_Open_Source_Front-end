@@ -1,0 +1,26 @@
+<div>
+  <h2>{{ product().name }}</h2>
+
+  <p>{{ product().description }}</p>
+
+  <p>Price: S/ {{ product().price }}</p>
+
+  <p>Minimum stock: {{ product().minimumStock }}</p>
+
+  <button
+    type="button"
+    (click)="onEdit()"
+  >
+    Edit
+  </button>
+
+  <button
+    type="button"
+    (click)="onDelete()"
+  >
+    Delete
+  </button>
+  <hr>
+
+</div>
+

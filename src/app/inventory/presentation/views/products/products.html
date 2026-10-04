@@ -1,0 +1,26 @@
+<h1>Products</h1>
+
+<h2>
+  @if (selectedProduct()) {
+    Edit product
+  } @else {
+    Create product
+  }
+</h2>
+
+<app-product-form
+  [categories]="categories()"
+  [product]="selectedProduct()"
+  (productSaved)="onProductSaved($event)"
+/>
+
+<hr>
+
+<h2>Product list</h2>
+
+<app-product-list
+  [products]="products()"
+  [categories]="categories()"
+  (edit)="onEdit($event)"
+  (remove)="onDelete($event)"
+/>
