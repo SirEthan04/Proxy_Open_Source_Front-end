@@ -1,0 +1,61 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Bebidas",
+      "description": "Bebidas y refrescos"
+    },
+    {
+      "id": 2,
+      "name": "Abarrotes",
+      "description": "Productos básicos de consumo"
+    },
+    {
+      "id": 3,
+      "name": "Lácteos",
+      "description": "Leche y productos derivados"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "businessId": 1,
+      "categoryId": 1,
+      "name": "Coca Cola 500ml",
+      "description": "Bebida gaseosa personal",
+      "price": 3.5,
+      "minimumStock": 10,
+      "active": true
+    },
+    {
+      "businessId": 1,
+      "categoryId": 2,
+      "name": "Arroz Costeño Premium 1kg",
+      "description": "Arroz extra",
+      "price": 5.2,
+      "minimumStock": 15,
+      "active": true,
+      "id": 2
+    },
+    {
+      "id": 3,
+      "businessId": 1,
+      "categoryId": 3,
+      "name": "Leche Gloria",
+      "description": "Leche evaporada",
+      "price": 4.5,
+      "minimumStock": 10,
+      "active": true
+    },
+    {
+      "businessId": 1,
+      "categoryId": 2,
+      "name": "Galletas Oreo",
+      "description": "Galletas de chocolate",
+      "price": 2.5,
+      "minimumStock": 10,
+      "active": true,
+      "id": 4
+    }
+  ]
+}
