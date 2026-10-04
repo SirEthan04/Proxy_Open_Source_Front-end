@@ -16,7 +16,7 @@
       type="text"
       placeholder="Name, description or category"
       [ngModel]="searchTerm()"
-      (ngModelChange)="searchTerm.set($event)"
+      (ngModelChange)="onSearchChange($event)"
     >
 
   </mat-form-field>
@@ -32,7 +32,7 @@
 
     <mat-select
       [ngModel]="selectedCategoryId()"
-      (ngModelChange)="selectedCategoryId.set($event)"
+      (ngModelChange)="onCategoryChange($event)"
     >
 
       <mat-option [value]="0">
@@ -62,7 +62,7 @@
 
     <mat-select
       [ngModel]="selectedStatus()"
-      (ngModelChange)="selectedStatus.set($event)"
+      (ngModelChange)="onStatusChange($event)"
     >
 
       <mat-option value="all">
@@ -229,6 +229,15 @@ filteredProducts().length === 0) {
       ></tr>
 
     </table>
+      <mat-paginator
+        [length]="filteredProducts().length"
+        [pageIndex]="pageIndex()"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="[5, 10, 25]"
+        [showFirstLastButtons]="true"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
 
   </div>
 }
