@@ -1,4 +1,29 @@
-@if (products().length === 0) {
+<div class="table-tools">
+
+  <mat-form-field
+    appearance="outline"
+    class="search-field"
+  >
+
+    <mat-label>Search products</mat-label>
+
+    <mat-icon matPrefix>
+      search
+    </mat-icon>
+
+    <input
+      matInput
+      type="text"
+      placeholder="Name, description or category"
+      [ngModel]="searchTerm()"
+      (ngModelChange)="searchTerm.set($event)"
+    >
+
+  </mat-form-field>
+
+</div>
+@if (products().length > 0 &&
+filteredProducts().length === 0) {
 
   <div class="empty-state">
     <mat-icon>inventory_2</mat-icon>
@@ -7,11 +32,13 @@
 
 } @else {
 
-  <div class="table-container">
+
+  @if (filteredProducts().length > 0){
+    <div class="table-container">
 
     <table
       mat-table
-      [dataSource]="products()"
+      [dataSource]="filteredProducts()"
       class="products-table"
     >
 
@@ -143,5 +170,6 @@
     </table>
 
   </div>
+}
 
 }

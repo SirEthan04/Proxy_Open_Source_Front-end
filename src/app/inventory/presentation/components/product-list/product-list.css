@@ -56,3 +56,13 @@
   height: 48px;
   font-size: 48px;
 }
+.table-tools {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 420px;
+}
