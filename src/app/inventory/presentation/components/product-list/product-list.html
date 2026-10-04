@@ -1,5 +1,5 @@
 <div class="table-tools">
-
+  <!-- Search -->
   <mat-form-field
     appearance="outline"
     class="search-field"
@@ -21,13 +21,74 @@
 
   </mat-form-field>
 
+
+  <!-- Category -->
+  <mat-form-field
+    appearance="outline"
+    class="filter-field"
+  >
+
+    <mat-label>Category</mat-label>
+
+    <mat-select
+      [ngModel]="selectedCategoryId()"
+      (ngModelChange)="selectedCategoryId.set($event)"
+    >
+
+      <mat-option [value]="0">
+        All categories
+      </mat-option>
+
+      @for (category of categories(); track category.id) {
+
+        <mat-option [value]="category.id">
+          {{ category.name }}
+        </mat-option>
+
+      }
+
+    </mat-select>
+
+  </mat-form-field>
+
+
+  <!-- Status -->
+  <mat-form-field
+    appearance="outline"
+    class="filter-field"
+  >
+
+    <mat-label>Status</mat-label>
+
+    <mat-select
+      [ngModel]="selectedStatus()"
+      (ngModelChange)="selectedStatus.set($event)"
+    >
+
+      <mat-option value="all">
+        All statuses
+      </mat-option>
+
+      <mat-option value="active">
+        Active
+      </mat-option>
+
+      <mat-option value="inactive">
+        Inactive
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+
 </div>
+
 @if (products().length > 0 &&
 filteredProducts().length === 0) {
 
   <div class="empty-state">
-    <mat-icon>inventory_2</mat-icon>
-    <p>No products available.</p>
+    <mat-icon>filter_alt_off</mat-icon>
+    <p>No products match the selected filters.</p>
   </div>
 
 } @else {
