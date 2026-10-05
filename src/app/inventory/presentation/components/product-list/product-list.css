@@ -1,11 +1,24 @@
+.inventory-panel {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
 .table-container {
   width: 100%;
   overflow-x: auto;
-  border-radius: 12px;
 }
 
-.products-table {
-  width: 100%;
+.products-table th {
+  font-weight: 600;
+  color: #374151;
+}
+
+.products-table td,
+.products-table th {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .product-info {
@@ -60,7 +73,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 16px;
+  padding: 20px 20px 4px;
 }
 
 .search-field {
@@ -69,6 +82,13 @@
 
 .filter-field {
   width: 200px;
+}
+
+.products-table tr[mat-row]:hover {
+  background: #f9fafb;
+}
+mat-paginator {
+  border-top: 1px solid #e5e7eb;
 }
 
 @media (max-width: 768px) {
