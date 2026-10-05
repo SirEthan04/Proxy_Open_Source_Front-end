@@ -1,3 +1,4 @@
+<div class="products-page">
 <div class="products-header">
 
   <div>
@@ -15,6 +16,50 @@
   </button>
 
 </div>
+<div class="summary-grid">
+
+  <div class="summary-card">
+
+    <div class="summary-icon">
+      <mat-icon>inventory_2</mat-icon>
+    </div>
+
+    <div class="summary-content">
+      <span>Total products</span>
+      <strong>{{ totalProducts() }}</strong>
+    </div>
+
+  </div>
+
+
+  <div class="summary-card">
+
+    <div class="summary-icon">
+      <mat-icon>check_circle</mat-icon>
+    </div>
+
+    <div class="summary-content">
+      <span>Active products</span>
+      <strong>{{ activeProducts() }}</strong>
+    </div>
+
+  </div>
+
+
+  <div class="summary-card">
+
+    <div class="summary-icon">
+      <mat-icon>pause_circle</mat-icon>
+    </div>
+
+    <div class="summary-content">
+      <span>Inactive products</span>
+      <strong>{{ inactiveProducts() }}</strong>
+    </div>
+
+  </div>
+
+</div>
 
 <app-product-list
   [products]="products()"
@@ -22,3 +67,4 @@
   (edit)="onEdit($event)"
   (remove)="onDelete($event)"
 />
+</div>

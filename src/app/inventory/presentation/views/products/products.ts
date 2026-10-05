@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +21,21 @@ export class Products implements OnInit {
 
   readonly products = this.inventoryStore.products;
   readonly categories = this.inventoryStore.categories;
+  readonly totalProducts = computed(() =>
+    this.products().length
+  );
+
+  readonly activeProducts = computed(() =>
+    this.products()
+      .filter(product => product.active)
+      .length
+  );
+
+  readonly inactiveProducts = computed(() =>
+    this.products()
+      .filter(product => !product.active)
+      .length
+  );
 
   ngOnInit(): void {
     this.inventoryStore.loadProducts();
