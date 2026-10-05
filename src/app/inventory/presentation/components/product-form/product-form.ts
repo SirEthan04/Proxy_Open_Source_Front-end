@@ -31,7 +31,7 @@ export class ProductForm {
   readonly form = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
-    categoryId: [0, Validators.required],
+    categoryId: [0, [Validators.required, Validators.min(1)]],
     price: [0, [Validators.required, Validators.min(0)]],
     minimumStock: [0, [Validators.required, Validators.min(0)]],
     active: [true],
