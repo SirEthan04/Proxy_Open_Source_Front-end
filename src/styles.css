@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+/* Shared BodeGo palette, based on the public landing page. */
+:root {
+  --bodego-primary: #2563eb;
+  --bodego-primary-hover: #1d4ed8;
+  --bodego-primary-soft: #dbeafe;
+  --bodego-on-primary: #ffffff;
+  --bodego-text: #0f172a;
+  --bodego-text-secondary: #475569;
+  --bodego-text-muted: #64748b;
+  --bodego-background: #f8fafc;
+  --bodego-surface: #ffffff;
+  --bodego-surface-muted: #f1f5f9;
+  --bodego-border: #cbd5e1;
+  --bodego-success: #166534;
+  --bodego-success-soft: #dcfce7;
+  --bodego-error: #b91c1c;
+  --bodego-error-soft: #fef2f2;
+  --bodego-overlay: rgb(15 23 42 / 45%);
+}
+
+body {
+  background-color: var(--bodego-background);
+  color: var(--bodego-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--bodego-primary);
+  outline-offset: 3px;
+}

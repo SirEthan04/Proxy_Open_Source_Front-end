@@ -6,7 +6,7 @@
   min-height: 100vh;
   padding: 24px;
 
-  background: #f8f9fa;
+  background: var(--bodego-background);
 }
 
 .sign-in-card {
@@ -15,8 +15,8 @@
 
   padding: 32px;
 
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: var(--bodego-surface);
+  border: 1px solid var(--bodego-border);
   border-radius: 16px;
 }
 
@@ -39,7 +39,8 @@
 
   margin-bottom: 12px;
 
-  background: #f3f4f6;
+  background: var(--bodego-primary-soft);
+  color: var(--bodego-primary-hover);
   border-radius: 12px;
 }
 
@@ -56,7 +57,7 @@
 
 .sign-in-header p {
   margin: 6px 0 0;
-  color: #6b7280;
+  color: var(--bodego-text-muted);
 }
 
 .sign-in-form {
@@ -70,8 +71,8 @@
 
   border-radius: 8px;
 
-  background: #fef2f2;
-  color: #b91c1c;
+  background: var(--bodego-error-soft);
+  color: var(--bodego-error);
 
   font-size: 13px;
 }
