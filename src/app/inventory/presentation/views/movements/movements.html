@@ -1,0 +1,18 @@
+<main class="page">
+  <header class="page-header"><div><h1>Movimientos</h1><p>Historial de cambios en las existencias de tus lotes.</p></div>
+    <button mat-flat-button type="button" (click)="openCreate()" [disabled]="lots().length === 0"><mat-icon>add</mat-icon>Registrar movimiento</button>
+  </header>
+  <section class="summary" aria-label="Resumen"><div class="summary-card"><span>Entradas</span><strong>{{ entryCount() }}</strong></div><div class="summary-card"><span>Salidas</span><strong>{{ exitCount() }}</strong></div><div class="summary-card"><span>Resultados</span><strong>{{ filtered().length }}</strong></div></section>
+  <section class="table-card" aria-label="Historial de movimientos">
+    <div class="tools"><mat-form-field appearance="outline"><mat-label>Buscar por producto, lote o motivo</mat-label><input matInput #search (input)="onSearch(search.value)"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Tipo</mat-label><mat-select #typeSelect (selectionChange)="onType(typeSelect.value)"><mat-option value="">Todos</mat-option><mat-option value="ENTRY">Entrada</mat-option><mat-option value="EXIT">Salida</mat-option><mat-option value="ADJUSTMENT">Ajuste</mat-option></mat-select></mat-form-field>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>Fecha</th><th>Lote / Producto</th><th>Tipo</th><th>Cantidad</th><th>Motivo</th></tr></thead>
+        <tbody>@for (movement of pageRows(); track movement.id) { <tr><td>{{ movement.date | date:'mediumDate' }}</td><td>{{ lotLabel(movement.lotId) }}</td><td><span class="type-badge" [class.entry]="movement.type === 'ENTRY'" [class.exit]="movement.type === 'EXIT'">{{ typeLabel(movement.type) }}</span></td><td>{{ movement.quantity }}</td><td>{{ movement.reason || '—' }}</td></tr> }</tbody>
+      </table>
+      @if (filtered().length === 0) { <div class="empty"><mat-icon>history</mat-icon><h2>No hay movimientos</h2><p>{{ movements().length === 0 ? 'Registra el primer movimiento para iniciar el historial.' : 'Prueba con otros términos o filtros.' }}</p></div> }
+    </div>
+    <mat-paginator [length]="filtered().length" [pageIndex]="pageIndex()" [pageSize]="pageSize()" [pageSizeOptions]="[5, 10, 25]" (page)="onPage($event)" aria-label="Paginación de movimientos" />
+  </section>
+</main>

@@ -73,5 +73,60 @@
       "password": "employee123",
       "role": "EMPLOYEE"
     }
+  ],
+  "lots": [
+    {
+      "id": 1,
+      "productId": 1,
+      "code": "LOT-001",
+      "quantity": 40
+    },
+    {
+      "id": 2,
+      "productId": 2,
+      "code": "LOT-002",
+      "quantity": 25
+    },
+    {
+      "id": 3,
+      "productId": 3,
+      "code": "LOT-003",
+      "quantity": 30
+    },
+    {
+      "id": 4,
+      "productId": 4,
+      "code": "LOT-004",
+      "quantity": 18
+    }
+  ],
+  "movements": [
+    {
+      "id": 1,
+      "lotId": 1,
+      "userId": 1,
+      "type": "ENTRY",
+      "quantity": 40,
+      "date": "2026-10-01",
+      "reason": "Carga inicial"
+    },
+    {
+      "id": 2,
+      "lotId": 2,
+      "userId": 2,
+      "type": "ENTRY",
+      "quantity": 25,
+      "date": "2026-10-02",
+      "reason": "Reposición"
+    },
+    {
+      "lotId": 3,
+      "userId": 2,
+      "type": "EXIT",
+      "quantity": 5,
+      "date": "2026-10-06",
+      "reason": "mateodemrd",
+      "id": 3
+    }
   ]
 }
