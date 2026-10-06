@@ -56,6 +56,16 @@
       "minimumStock": 10,
       "active": true,
       "id": 4
+    },
+    {
+      "businessId": 1,
+      "categoryId": 3,
+      "name": "Agua San Mateo",
+      "description": "Awua personañ",
+      "price": 2,
+      "minimumStock": 67,
+      "active": true,
+      "id": 5
     }
   ],
   "lots": [
@@ -96,13 +106,13 @@
       "active": true
     },
     {
-      "id": 5,
       "productId": 4,
       "batchNumber": "OR-2026-001",
       "quantity": 0,
       "expirationDate": "2026-12-31",
       "entryDate": "2026-09-15",
-      "active": false
+      "active": true,
+      "id": 5
     },
     {
       "id": 6,
@@ -112,6 +122,15 @@
       "expirationDate": "2027-04-30",
       "entryDate": "2026-10-03",
       "active": true
+    },
+    {
+      "productId": 5,
+      "batchNumber": "AM-2026-067",
+      "quantity": 9,
+      "expirationDate": "2069-05-04",
+      "entryDate": "2067-05-04",
+      "active": true,
+      "id": 7
     }
   ],
   "users": [
@@ -131,6 +150,34 @@
     }
   ],
   "movements": [],
+<<<<<<< HEAD
+  "physicalCounts": [
+    {
+      "lotId": 3,
+      "userId": 1,
+      "systemQuantity": 30,
+      "physicalQuantity": 30,
+      "difference": 0,
+      "date": "2026-10-06",
+      "observation": "Ok",
+      "id": 1
+    }
+  ],
+  "alerts": [
+    {
+      "productId": 5,
+      "lotId": null,
+      "type": "LOW_STOCK",
+      "level": "WARNING",
+      "message": "Available stock (9) is at or below the minimum (67).",
+      "generatedAt": "2026-10-06T06:21:22.101Z",
+      "attended": false,
+      "id": 1
+    }
+  ]
+}
+=======
   "physicalCounts": [],
   "alerts": []
 }
+>>>>>>> 9d1716863aaa72b25900d58047a642a5c38941b7

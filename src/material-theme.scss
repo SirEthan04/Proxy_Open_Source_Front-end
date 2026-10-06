@@ -17,6 +17,38 @@ html {
       density: 0,
     )
   );
+  @include mat.theme-overrides((
+    primary: var(--bodego-primary),
+    on-primary: var(--bodego-on-primary),
+    primary-container: var(--bodego-primary-soft),
+    on-primary-container: var(--bodego-primary-hover),
+    secondary: var(--bodego-text-secondary),
+    on-secondary: var(--bodego-on-primary),
+    secondary-container: var(--bodego-primary-soft),
+    on-secondary-container: var(--bodego-primary-hover),
+    tertiary: var(--bodego-primary),
+    on-tertiary: var(--bodego-on-primary),
+    tertiary-container: var(--bodego-primary-soft),
+    on-tertiary-container: var(--bodego-primary-hover),
+    surface: var(--bodego-surface),
+    surface-dim: var(--bodego-surface-muted),
+    surface-bright: var(--bodego-surface),
+    surface-container-lowest: var(--bodego-surface),
+    surface-container-low: var(--bodego-background),
+    surface-container: var(--bodego-background),
+    surface-container-high: var(--bodego-surface-muted),
+    surface-container-highest: var(--bodego-surface-muted),
+    on-surface: var(--bodego-text),
+    on-surface-variant: var(--bodego-text-secondary),
+    outline: var(--bodego-text-muted),
+    outline-variant: var(--bodego-border),
+    background: var(--bodego-background),
+    on-background: var(--bodego-text),
+    error: var(--bodego-error),
+    on-error: var(--bodego-on-primary),
+    error-container: var(--bodego-error-soft),
+    on-error-container: var(--bodego-error),
+  ));
 }
 
 body {

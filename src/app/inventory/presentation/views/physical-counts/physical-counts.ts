@@ -11,6 +11,10 @@ import { PhysicalCountList } from '../../components/physical-count-list/physical
 @Component({
   selector: 'app-physical-counts',
   imports: [PhysicalCountList, MatButtonModule, MatIconModule],
+<<<<<<< HEAD
+  templateUrl: './physical-counts.html',
+  styleUrl: './physical-counts.css',
+=======
   template: `
     <div class="counts-page">
       <header class="counts-header">
@@ -31,6 +35,7 @@ import { PhysicalCountList } from '../../components/physical-count-list/physical
   styles: `
     .counts-page{padding:24px;min-height:100%;background:#f8f9fa}.counts-page>*{max-width:1400px;margin-left:auto;margin-right:auto}.counts-header{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:24px}.counts-header h1{margin:0}.counts-header p{margin:6px 0 0;color:#555}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}.summary-card{display:flex;align-items:center;gap:16px;padding:20px;background:white;border:1px solid #e5e7eb;border-radius:12px}.summary-icon{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:10px;background:#f3f4f6}.summary-icon mat-icon{color:#374151}.summary-content{display:flex;flex-direction:column;gap:4px}.summary-content span{font-size:13px;color:#555}.summary-content strong{font-size:24px;font-weight:600}.error-state{display:flex;flex-wrap:wrap;align-items:center;gap:16px;color:#9b1c1c}@media(max-width:768px){.summary-grid{grid-template-columns:1fr}.counts-page{padding:16px}}@media(max-width:600px){.counts-header{flex-direction:column;align-items:stretch}}
   `,
+>>>>>>> 9d1716863aaa72b25900d58047a642a5c38941b7
 })
 export class PhysicalCounts implements OnInit {
   private readonly inventoryStore = inject(InventoryStore);
@@ -39,6 +44,13 @@ export class PhysicalCounts implements OnInit {
   readonly counts = this.inventoryStore.physicalCounts;
   readonly lots = this.inventoryStore.lots;
   readonly products = this.inventoryStore.products;
+<<<<<<< HEAD
+  readonly users = this.inventoryStore.users;
+  readonly loading = this.inventoryStore.physicalCountsLoading;
+  readonly error = this.inventoryStore.physicalCountsError;
+  readonly totalCounts = computed(() => this.counts().length);
+  readonly shortages = computed(() => this.counts().filter((count) => count.difference < 0).length);
+=======
   readonly users = computed(() => {
     const user = this.iamStore.currentUser();
     return user ? [user] : [];
@@ -47,17 +59,32 @@ export class PhysicalCounts implements OnInit {
   readonly error = this.inventoryStore.physicalCountsError;
   readonly totalCounts = computed(() => this.counts().length);
   readonly discrepancies = computed(() => this.counts().filter((count) => count.difference !== 0).length);
+>>>>>>> 9d1716863aaa72b25900d58047a642a5c38941b7
   readonly matches = computed(() => this.counts().filter((count) => count.difference === 0).length);
 
   ngOnInit(): void {
     this.inventoryStore.loadProducts();
     this.inventoryStore.loadLots();
+<<<<<<< HEAD
+    this.inventoryStore.loadUsers();
+=======
+>>>>>>> 9d1716863aaa72b25900d58047a642a5c38941b7
     this.reload();
   }
 
   reload(): void { this.inventoryStore.loadPhysicalCounts(); }
 
   onCreate(): void {
+<<<<<<< HEAD
+    const data: PhysicalCountDialogData = { lots: this.lots().filter((lot) => lot.active), products: this.products() };
+    this.dialog.open<PhysicalCountDialog, PhysicalCountDialogData, PhysicalCount>(PhysicalCountDialog, {
+      data, width: '560px', maxWidth: 'calc(100vw - 32px)',
+    }).afterClosed().subscribe((count) => {
+      const userId = this.iamStore.currentUser()?.id;
+      if (!count || userId === undefined) return;
+      this.inventoryStore.createPhysicalCount(new PhysicalCount(count.id, count.lotId, userId, count.systemQuantity,
+        count.physicalQuantity, count.physicalQuantity - count.systemQuantity, count.date, count.observation));
+=======
     const data: PhysicalCountDialogData = { lots: this.lots(), products: this.products() };
     this.dialog.open<PhysicalCountDialog, PhysicalCountDialogData, PhysicalCount>(PhysicalCountDialog, {
       data, width: '560px', maxWidth: 'calc(100vw - 32px)',
@@ -65,6 +92,7 @@ export class PhysicalCounts implements OnInit {
       if (!count) return;
       const userId = this.iamStore.currentUser()?.id ?? 0;
       this.inventoryStore.createPhysicalCount(new PhysicalCount(count.id, count.lotId, userId, count.systemQuantity, count.physicalQuantity, count.date, count.observation));
+>>>>>>> 9d1716863aaa72b25900d58047a642a5c38941b7
     });
   }
 }
