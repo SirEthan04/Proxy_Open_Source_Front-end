@@ -1,4 +1,18 @@
 {
+  "users": [
+    {
+      "id": 1,
+      "username": "demo",
+      "password": "demo123",
+      "role": "employee"
+    },
+    {
+      "id": 2,
+      "username": "admin",
+      "password": "admin123",
+      "role": "administrator"
+    }
+  ],
   "categories": [
     {
       "id": 1,
