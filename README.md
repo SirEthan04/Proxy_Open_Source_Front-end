@@ -4,6 +4,10 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
+Use Node.js `^22.22.3`, `^24.15.0`, or `>=26.0.0`, as required by Angular 22.
+Check the active version with `node --version`. In IntelliJ, select a compatible
+Node.js interpreter and restart the terminal if it is using an older bundled runtime.
+
 To start a local development server, run:
 
 ```bash

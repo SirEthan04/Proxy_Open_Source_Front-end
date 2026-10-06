@@ -1,0 +1,7 @@
+<label class="language-switcher">
+  <span>{{ 'language.label' | translate }}</span>
+  <select [value]="language() ?? 'en'" (change)="changeLanguage($event)">
+    <option value="en" lang="en">English</option>
+    <option value="es" lang="es">Español</option>
+  </select>
+</label>

@@ -81,3 +81,6 @@
   margin-top: 8px;
   min-height: 44px;
 }
+.sign-in-card app-language-switcher {
+  margin-bottom: 20px;
+}

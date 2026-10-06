@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +10,7 @@ import { LotDialog, LotDialogData } from '../../components/lot-dialog/lot-dialog
 
 @Component({
   selector: 'app-lots',
-  imports: [LotList, MatButtonModule, MatIconModule],
+  imports: [TranslatePipe, LotList, MatButtonModule, MatIconModule],
   templateUrl: './lots.html',
   styleUrl: './lots.css',
 })

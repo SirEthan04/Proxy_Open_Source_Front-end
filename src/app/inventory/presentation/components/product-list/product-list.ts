@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +14,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-product-list',
   imports: [
+    TranslatePipe,
     MatTableModule,
     MatButtonModule,
     MatIconModule,

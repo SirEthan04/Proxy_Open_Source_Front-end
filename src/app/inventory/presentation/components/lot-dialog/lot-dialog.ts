@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,14 +13,16 @@ export interface LotDialogData {
 
 @Component({
   selector: 'app-lot-dialog',
-  imports: [MatDialogModule, MatButtonModule, LotForm],
+  imports: [TranslatePipe, MatDialogModule, MatButtonModule, LotForm],
   template: `
-    <h2 mat-dialog-title>{{ data.lot ? 'Edit lot' : 'New lot' }}</h2>
+    <h2 mat-dialog-title>{{ (data.lot ? 'lots.edit' : 'lots.new') | translate }}</h2>
     <mat-dialog-content>
       <app-lot-form [lot]="data.lot" [products]="data.products" (lotSaved)="onLotSaved($event)" />
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-button type="button" (click)="onCancel()">
+        {{ 'common.cancel' | translate }}
+      </button>
     </mat-dialog-actions>
   `,
   styles: `

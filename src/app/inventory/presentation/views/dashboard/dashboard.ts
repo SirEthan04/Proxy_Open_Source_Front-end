@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -6,7 +7,7 @@ import { IamStore } from '../../../../iam/application/iam.store';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatIconModule],
+  imports: [TranslatePipe, MatIconModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

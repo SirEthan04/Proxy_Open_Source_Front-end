@@ -1,9 +1,11 @@
+import { provideTranslateService } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 import { LotForm } from './lot-form';
 import { Product } from '../../../domain/model/product.entity';
 import { Lot } from '../../../domain/model/lot.entity';
 
 describe('LotForm', () => {
+  beforeEach(() => TestBed.configureTestingModule({ providers: [provideTranslateService()] }));
   function setup(lot: Lot | null = null) {
     const fixture = TestBed.createComponent(LotForm);
     fixture.componentRef.setInput('products', [new Product(1, 1, 1, 'Coca Cola')]);

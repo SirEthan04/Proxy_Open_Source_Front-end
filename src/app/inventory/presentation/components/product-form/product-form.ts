@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Product } from '../../../domain/model/product.entity';
@@ -11,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-product-form',
   imports: [
+    TranslatePipe,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

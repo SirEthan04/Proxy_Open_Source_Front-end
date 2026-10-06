@@ -1,3 +1,4 @@
+import { provideTranslateService } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
@@ -12,7 +13,12 @@ describe('Inventory routes inside the authenticated Layout', () => {
   beforeEach(() => {
     localStorage.removeItem('bodego_user');
     TestBed.configureTestingModule({
-      providers: [provideRouter(routes), provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        provideTranslateService(),
+        provideRouter(routes),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     });
   });
   afterEach(() => {
@@ -58,19 +64,17 @@ describe('Inventory routes inside the authenticated Layout', () => {
       expect(harness.routeNativeElement?.querySelector('a[href="/lots"]')).toBeTruthy();
       await harness.navigateByUrl('/lots');
       http.expectOne('http://localhost:3000/api/v1/products').flush([product]);
-      http
-        .expectOne('http://localhost:3000/api/v1/lots')
-        .flush([
-          {
-            id: 1,
-            productId: 1,
-            batchNumber: 'CC-001',
-            quantity: 12,
-            expirationDate: null,
-            entryDate: '2026-10-05',
-            active: true,
-          },
-        ]);
+      http.expectOne('http://localhost:3000/api/v1/lots').flush([
+        {
+          id: 1,
+          productId: 1,
+          batchNumber: 'CC-001',
+          quantity: 12,
+          expirationDate: null,
+          entryDate: '2026-10-05',
+          active: true,
+        },
+      ]);
       harness.detectChanges();
       expect(TestBed.inject(Router).url).toBe('/lots');
       expect(harness.routeNativeElement?.querySelector('app-lots')?.textContent).toContain(

@@ -4,6 +4,10 @@
   background: var(--bodego-background);
 }
 
+.sidebar-footer app-language-switcher {
+  padding: 8px 12px 16px;
+}
+
 .sidebar {
   position: fixed;
   top: 0;

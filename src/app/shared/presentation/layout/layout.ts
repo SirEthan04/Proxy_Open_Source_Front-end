@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject, signal } from '@angular/core';
 
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -5,10 +6,18 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { MatIconModule } from '@angular/material/icon';
 
 import { IamStore } from '../../../iam/application/iam.store';
+import { LanguageSwitcher } from '../components/language-switcher/language-switcher';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatIconModule],
+  imports: [
+    TranslatePipe,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    MatIconModule,
+    LanguageSwitcher,
+  ],
   templateUrl: './layout.html',
   styleUrl: './layout.css',
 })

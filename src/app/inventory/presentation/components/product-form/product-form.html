@@ -5,29 +5,29 @@
 >
 
   <mat-form-field appearance="outline">
-    <mat-label>Name</mat-label>
+    <mat-label>{{ 'common.name' | translate }}</mat-label>
 
     <input
       matInput
       formControlName="name"
-      placeholder="Example: Coca Cola 500ml"
+      [placeholder]="'products.nameHint' | translate"
     >
 
     @if (form.controls.name.hasError('required')) {
       <mat-error>
-        Name is required.
+        {{ 'products.nameRequired' | translate }}
       </mat-error>
     }
   </mat-form-field>
 
 
   <mat-form-field appearance="outline">
-    <mat-label>Category</mat-label>
+    <mat-label>{{ 'common.category' | translate }}</mat-label>
 
     <mat-select formControlName="categoryId">
 
       <mat-option [value]="0">
-        Select category
+        {{ 'products.selectCategory' | translate }}
       </mat-option>
 
       @for (category of categories(); track category.id) {
@@ -42,18 +42,18 @@
 
 
   <mat-form-field appearance="outline">
-    <mat-label>Description</mat-label>
+    <mat-label>{{ 'common.description' | translate }}</mat-label>
 
     <textarea
       matInput
       formControlName="description"
       rows="3"
-      placeholder="Product description"
+      [placeholder]="'products.descriptionHint' | translate"
     ></textarea>
 
     @if (form.controls.description.hasError('required')) {
       <mat-error>
-        Description is required.
+        {{ 'products.descriptionRequired' | translate }}
       </mat-error>
     }
 
@@ -63,7 +63,7 @@
   <div class="form-row">
 
     <mat-form-field appearance="outline">
-      <mat-label>Price</mat-label>
+      <mat-label>{{ 'common.price' | translate }}</mat-label>
 
       <span matTextPrefix>S/&nbsp;</span>
 
@@ -77,7 +77,7 @@
 
 
     <mat-form-field appearance="outline">
-      <mat-label>Minimum stock</mat-label>
+      <mat-label>{{ 'common.minimumStock' | translate }}</mat-label>
 
       <input
         matInput
@@ -90,7 +90,7 @@
 
 
   <mat-checkbox formControlName="active">
-    Active product
+    {{ 'products.activeLabel' | translate }}
   </mat-checkbox>
 
 
@@ -102,9 +102,9 @@
       [disabled]="form.invalid"
     >
       @if (product()) {
-        Update product
+        {{ 'products.update' | translate }}
       } @else {
-        Create product
+        {{ 'products.create' | translate }}
       }
     </button>
 

@@ -18,14 +18,14 @@
   ],
   "products": [
     {
-      "id": 1,
       "businessId": 1,
       "categoryId": 1,
       "name": "Coca Cola 500ml",
       "description": "Bebida gaseosa personal",
       "price": 3.5,
       "minimumStock": 10,
-      "active": true
+      "active": true,
+      "id": 1
     },
     {
       "businessId": 1,
@@ -150,7 +150,6 @@
     }
   ],
   "movements": [],
-<<<<<<< HEAD
   "physicalCounts": [
     {
       "lotId": 3,
@@ -161,6 +160,16 @@
       "date": "2026-10-06",
       "observation": "Ok",
       "id": 1
+    },
+    {
+      "lotId": 6,
+      "userId": 2,
+      "systemQuantity": 16,
+      "physicalQuantity": 17,
+      "difference": 1,
+      "date": "2026-10-06",
+      "observation": "Hay de mas",
+      "id": 2
     }
   ],
   "alerts": [
@@ -176,8 +185,3 @@
     }
   ]
 }
-=======
-  "physicalCounts": [],
-  "alerts": []
-}
->>>>>>> 9d1716863aaa72b25900d58047a642a5c38941b7

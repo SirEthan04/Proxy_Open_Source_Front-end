@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, computed, input, linkedSignal, output, signal } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +21,7 @@ interface LotPageSource {
 @Component({
   selector: 'app-lot-list',
   imports: [
+    TranslatePipe,
     MatTableModule,
     MatButtonModule,
     MatIconModule,

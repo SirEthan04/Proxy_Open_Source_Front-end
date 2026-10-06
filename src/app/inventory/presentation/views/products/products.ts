@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,7 +12,7 @@ import { ProductDialog, ProductDialogData } from '../../components/product-dialo
 
 @Component({
   selector: 'app-products',
-  imports: [ProductList, MatButtonModule, MatIconModule],
+  imports: [TranslatePipe, ProductList, MatButtonModule, MatIconModule],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
@@ -21,20 +22,14 @@ export class Products implements OnInit {
 
   readonly products = this.inventoryStore.products;
   readonly categories = this.inventoryStore.categories;
-  readonly totalProducts = computed(() =>
-    this.products().length
+  readonly totalProducts = computed(() => this.products().length);
+
+  readonly activeProducts = computed(
+    () => this.products().filter((product) => product.active).length,
   );
 
-  readonly activeProducts = computed(() =>
-    this.products()
-      .filter(product => product.active)
-      .length
-  );
-
-  readonly inactiveProducts = computed(() =>
-    this.products()
-      .filter(product => !product.active)
-      .length
+  readonly inactiveProducts = computed(
+    () => this.products().filter((product) => !product.active).length,
   );
 
   ngOnInit(): void {
