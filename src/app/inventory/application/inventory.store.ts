@@ -9,6 +9,8 @@ import { Lot } from '../domain/model/lot.entity';
 import { LotApi } from '../infrastructure/lot-api';
 import { InventoryMovement } from '../domain/model/inventory-movement.entity';
 import { InventoryMovementApi } from '../infrastructure/inventory-movement-api';
+import { PhysicalCount } from '../domain/model/physical-count.entity';
+import { PhysicalCountApi } from '../infrastructure/physical-count-api';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,7 @@ export class InventoryStore {
   private readonly categoryApi = inject(CategoryApi);
   private readonly lotApi = inject(LotApi);
   private readonly movementApi = inject(InventoryMovementApi);
+  private readonly physicalCountApi = inject(PhysicalCountApi);
 
   private readonly productsSignal = signal<Product[]>([]);
   private readonly categoriesSignal = signal<Category[]>([]);
@@ -27,6 +30,9 @@ export class InventoryStore {
   private readonly movementsSignal = signal<InventoryMovement[]>([]);
   private readonly movementsLoadingSignal = signal(false);
   private readonly movementsErrorSignal = signal<string | null>(null);
+  private readonly physicalCountsSignal = signal<PhysicalCount[]>([]);
+  private readonly physicalCountsLoadingSignal = signal(false);
+  private readonly physicalCountsErrorSignal = signal<string | null>(null);
 
   readonly products = this.productsSignal.asReadonly();
   readonly categories = this.categoriesSignal.asReadonly();
@@ -36,6 +42,32 @@ export class InventoryStore {
   readonly movements = this.movementsSignal.asReadonly();
   readonly movementsLoading = this.movementsLoadingSignal.asReadonly();
   readonly movementsError = this.movementsErrorSignal.asReadonly();
+  readonly physicalCounts = this.physicalCountsSignal.asReadonly();
+  readonly physicalCountsLoading = this.physicalCountsLoadingSignal.asReadonly();
+  readonly physicalCountsError = this.physicalCountsErrorSignal.asReadonly();
+
+  loadPhysicalCounts(): void {
+    this.physicalCountsLoadingSignal.set(true);
+    this.physicalCountsErrorSignal.set(null);
+    this.physicalCountApi.getAll().subscribe({
+      next: (counts) => {
+        this.physicalCountsSignal.set(counts);
+        this.physicalCountsLoadingSignal.set(false);
+      },
+      error: () => {
+        this.physicalCountsLoadingSignal.set(false);
+        this.physicalCountsErrorSignal.set('Could not load physical counts. Please try again.');
+      },
+    });
+  }
+
+  createPhysicalCount(count: PhysicalCount): void {
+    this.physicalCountsErrorSignal.set(null);
+    this.physicalCountApi.create(count).subscribe({
+      next: (createdCount) => this.physicalCountsSignal.update((counts) => [createdCount, ...counts]),
+      error: () => this.physicalCountsErrorSignal.set('Could not save the physical count. Please try again.'),
+    });
+  }
 
   loadMovements(): void {
     this.movementsLoadingSignal.set(true);
