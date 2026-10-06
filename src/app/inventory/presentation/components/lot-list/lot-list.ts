@@ -1,4 +1,5 @@
-import { Component, computed, input, linkedSignal, output, signal } from '@angular/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { inject, Component, computed, input, linkedSignal, output, signal } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,7 +20,7 @@ interface LotPageSource {
 
 @Component({
   selector: 'app-lot-list',
-  imports: [
+  imports: [TranslatePipe,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
@@ -32,6 +33,7 @@ interface LotPageSource {
   styleUrl: './lot-list.css',
 })
 export class LotList {
+  readonly translate = inject(TranslateService);
   readonly lots = input.required<Lot[]>();
   readonly products = input.required<Product[]>();
   readonly edit = output<Lot>();
@@ -55,6 +57,7 @@ export class LotList {
   );
 
   readonly filteredLots = computed(() => {
+    this.translate.currentLang();
     const term = this.searchTerm().trim().toLowerCase();
     const productId = this.selectedProductId();
     const status = this.selectedStatus();
@@ -97,7 +100,7 @@ export class LotList {
   });
 
   getProductName(productId: number): string {
-    return this.productNames().get(productId) ?? 'Product unavailable';
+    return this.productNames().get(productId) ?? this.translate.instant('common.productUnavailable');
   }
 
   onSearchChange(event: Event): void {

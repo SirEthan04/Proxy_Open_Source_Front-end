@@ -1,3 +1,5 @@
+import { LanguageSwitcher } from '../components/language-switcher/language-switcher';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, inject, signal } from '@angular/core';
 
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -8,7 +10,7 @@ import { IamStore } from '../../../iam/application/iam.store';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatIconModule],
+  imports: [TranslatePipe, LanguageSwitcher, RouterOutlet, RouterLink, RouterLinkActive, MatIconModule],
   templateUrl: './layout.html',
   styleUrl: './layout.css',
 })

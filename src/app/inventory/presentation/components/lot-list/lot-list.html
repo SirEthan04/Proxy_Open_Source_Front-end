@@ -1,34 +1,34 @@
 <div class="inventory-panel">
   <div class="table-tools">
     <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Search lots</mat-label>
+      <mat-label>{{ 'lots.search' | translate }}</mat-label>
       <mat-icon matPrefix>search</mat-icon>
       <input
         matInput
         type="search"
-        placeholder="Batch number or product"
+        [placeholder]="'lots.searchPlaceholder' | translate"
         [value]="searchTerm()"
         (input)="onSearchChange($event)"
       />
     </mat-form-field>
     <mat-form-field appearance="outline" class="filter-field">
-      <mat-label>Product</mat-label>
+      <mat-label>{{ 'common.product' | translate }}</mat-label>
       <mat-select
         [value]="selectedProductId()"
         (selectionChange)="selectedProductId.set($event.value)"
       >
-        <mat-option [value]="0">All products</mat-option>
+        <mat-option [value]="0">{{ 'lots.allProducts' | translate }}</mat-option>
         @for (product of products(); track product.id) {
           <mat-option [value]="product.id">{{ product.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline" class="filter-field">
-      <mat-label>Status</mat-label>
+      <mat-label>{{ 'common.status' | translate }}</mat-label>
       <mat-select [value]="selectedStatus()" (selectionChange)="selectedStatus.set($event.value)">
-        <mat-option value="all">All statuses</mat-option>
-        <mat-option value="active">Active</mat-option>
-        <mat-option value="inactive">Inactive</mat-option>
+        <mat-option value="all">{{ 'common.allStatuses' | translate }}</mat-option>
+        <mat-option value="active">{{ 'common.active' | translate }}</mat-option>
+        <mat-option value="inactive">{{ 'common.inactive' | translate }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -38,56 +38,56 @@
       <p>
         {{
           lots().length
-            ? 'No lots match the selected filters.'
-            : 'No lots registered. Create your first lot.'
+            ? ('lots.noResults' | translate)
+            : ('lots.empty' | translate)
         }}
       </p>
     </div>
   } @else {
-    <div class="table-container" role="region" aria-label="Lots table" tabindex="0">
+    <div class="table-container" role="region" [attr.aria-label]="'lots.table' | translate" tabindex="0">
       <table
         mat-table
         [dataSource]="paginatedLots()"
         class="lots-table"
-        aria-label="Registered lots"
+        [attr.aria-label]="'lots.registered' | translate"
       >
         <ng-container matColumnDef="batchNumber">
-          <th mat-header-cell *matHeaderCellDef>Batch number</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'lots.batchNumber' | translate }}</th>
           <td mat-cell *matCellDef="let lot">
             <strong>{{ lot.batchNumber }}</strong>
           </td>
         </ng-container>
         <ng-container matColumnDef="product">
-          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'common.product' | translate }}</th>
           <td mat-cell *matCellDef="let lot">{{ getProductName(lot.productId) }}</td>
         </ng-container>
         <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'common.quantity' | translate }}</th>
           <td mat-cell *matCellDef="let lot">{{ lot.quantity }}</td>
         </ng-container>
         <ng-container matColumnDef="entryDate">
-          <th mat-header-cell *matHeaderCellDef>Entry date</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'lots.entryDate' | translate }}</th>
           <td mat-cell *matCellDef="let lot">{{ lot.entryDate }}</td>
         </ng-container>
         <ng-container matColumnDef="expirationDate">
-          <th mat-header-cell *matHeaderCellDef>Expiration date</th>
-          <td mat-cell *matCellDef="let lot">{{ lot.expirationDate || 'Not specified' }}</td>
+          <th mat-header-cell *matHeaderCellDef>{{ 'lots.expirationDate' | translate }}</th>
+          <td mat-cell *matCellDef="let lot">{{ lot.expirationDate || ('common.notSpecified' | translate) }}</td>
         </ng-container>
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'common.status' | translate }}</th>
           <td mat-cell *matCellDef="let lot">
             <span class="status" [class.active]="lot.active" [class.inactive]="!lot.active">{{
-              lot.active ? 'Active' : 'Inactive'
+              lot.active ? ('common.active' | translate) : ('common.inactive' | translate)
             }}</span>
           </td>
         </ng-container>
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'common.actions' | translate }}</th>
           <td mat-cell *matCellDef="let lot" class="actions">
             <button
               mat-icon-button
               type="button"
-              [attr.aria-label]="'Edit lot ' + lot.batchNumber"
+              [attr.aria-label]="'lots.editLabel' | translate: { batch: lot.batchNumber }"
               (click)="edit.emit(lot)"
             >
               <mat-icon>edit</mat-icon>
@@ -95,7 +95,7 @@
             <button
               mat-icon-button
               type="button"
-              [attr.aria-label]="'Delete lot ' + lot.batchNumber"
+              [attr.aria-label]="'lots.deleteLabel' | translate: { batch: lot.batchNumber }"
               (click)="remove.emit(lot)"
             >
               <mat-icon>delete</mat-icon>
@@ -107,7 +107,7 @@
       </table>
     </div>
     <mat-paginator
-      aria-label="Lots pagination"
+      [attr.aria-label]="'lots.pagination' | translate"
       [length]="filteredLots().length"
       [pageIndex]="pageIndex()"
       [pageSize]="pageSize()"

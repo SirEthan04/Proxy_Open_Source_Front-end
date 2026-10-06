@@ -1,0 +1,58 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [attr.aria-busy]="saving()">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'common.productLot' | translate }}</mat-label>
+    <mat-select formControlName="lotId" required>
+      @for (lot of lots(); track lot.id) {
+        <mat-option [value]="lot.id">{{ lotLabel(lot) }}</mat-option>
+      }
+    </mat-select>
+    @if (form.controls.lotId.invalid) {
+      <mat-error>{{ 'physicalCounts.validation.lotRequired' | translate }}</mat-error>
+    }
+  </mat-form-field>
+  @if (lots().length === 0) {
+    <p role="status">{{ 'physicalCounts.noLots' | translate }}</p>
+  }
+  <dl class="quantities" aria-live="polite">
+    <div>
+      <dt>{{ 'physicalCounts.systemQuantity' | translate }}</dt>
+      <dd>{{ selectedLot()?.quantity ?? '—' }}</dd>
+    </div>
+    <div>
+      <dt>{{ 'physicalCounts.differenceFormula' | translate }}</dt>
+      <dd>{{ difference() ?? '—' }}</dd>
+    </div>
+  </dl>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'physicalCounts.physicalQuantity' | translate }}</mat-label>
+    <input
+      matInput
+      type="number"
+      min="0"
+      step="any"
+      formControlName="physicalQuantity"
+      required
+      [readonly]="saving()"
+    />
+    @if (form.controls.physicalQuantity.invalid) {
+      <mat-error>{{ 'physicalCounts.validation.physicalQuantity' | translate }}</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'common.date' | translate }}</mat-label>
+    <input matInput type="date" formControlName="date" required [readonly]="saving()" />
+    @if (form.controls.date.invalid) {
+      <mat-error>{{ 'physicalCounts.validation.date' | translate }}</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'physicalCounts.optionalObservation' | translate }}</mat-label>
+    <textarea matInput rows="3" formControlName="observation" [readonly]="saving()"></textarea>
+  </mat-form-field>
+  <p>{{ 'physicalCounts.stockNotice' | translate }}</p>
+  <div class="form-actions">
+    <button mat-flat-button type="submit" [disabled]="form.invalid || !selectedLot() || saving()">
+      {{ (saving() ? 'common.saving' : 'physicalCounts.recordCount') | translate }}
+    </button>
+  </div>
+</form>

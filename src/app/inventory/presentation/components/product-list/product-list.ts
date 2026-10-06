@@ -1,9 +1,10 @@
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Product } from '../../../domain/model/product.entity';
 import { Category } from '../../../domain/model/category.entity';
-import { Component, computed, input, output, signal } from '@angular/core';
+import { inject, Component, computed, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,7 +13,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product-list',
-  imports: [
+  imports: [TranslatePipe,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
@@ -26,6 +27,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
   styleUrl: './product-list.css',
 })
 export class ProductList {
+  readonly translate = inject(TranslateService);
   readonly products = input.required<Product[]>();
   readonly categories = input.required<Category[]>();
   readonly searchTerm = signal('');
@@ -45,6 +47,7 @@ export class ProductList {
   readonly pageSize = signal(5);
 
   readonly filteredProducts = computed(() => {
+    this.translate.currentLang();
     const term = this.searchTerm().trim().toLowerCase();
 
     const categoryId = this.selectedCategoryId();
@@ -80,7 +83,7 @@ export class ProductList {
   getCategoryName(categoryId: number): string {
     const category = this.categories().find((category) => category.id === categoryId);
 
-    return category?.name ?? 'Unknown';
+    return category?.name ?? this.translate.instant('common.unknown');
   }
 
   onEdit(product: Product): void {

@@ -1,3 +1,5 @@
+import { TranslatePipe } from '@ngx-translate/core';
+import { LanguageSwitcher } from '../../../../shared/presentation/components/language-switcher/language-switcher';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,7 +14,7 @@ import { SignInCommand } from '../../../domain/model/sign-in.command';
 
 @Component({
   selector: 'app-sign-in-form',
-  imports: [
+  imports: [TranslatePipe, LanguageSwitcher,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

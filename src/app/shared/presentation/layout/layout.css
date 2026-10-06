@@ -14,6 +14,7 @@
 
   width: 250px;
   height: 100vh;
+  overflow-y: auto;
 
   background: var(--bodego-surface);
   border-right: 1px solid var(--bodego-border);

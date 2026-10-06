@@ -1,9 +1,10 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, input, output } from '@angular/core';
 import { Product } from '../../../domain/model/product.entity';
 
 @Component({
   selector: 'app-product-item',
-  imports: [],
+  imports: [TranslatePipe, ],
   templateUrl: './product-item.html',
   styleUrl: './product-item.css',
 })

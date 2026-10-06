@@ -1,0 +1,111 @@
+<section class="inventory-panel" [attr.aria-label]="'physicalCounts.history' | translate">
+  <div class="table-tools">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>{{ 'physicalCounts.search' | translate }}</mat-label>
+      <input
+        matInput
+        type="search"
+        [placeholder]="'physicalCounts.searchPlaceholder' | translate"
+        [value]="searchTerm()"
+        (input)="onSearch($event)"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'physicalCounts.difference' | translate }}</mat-label>
+      <mat-select [value]="selectedStatus()" (selectionChange)="selectedStatus.set($event.value)">
+        <mat-option value="all">{{ 'physicalCounts.allDifferences' | translate }}</mat-option>
+        <mat-option value="MATCH">{{ 'physicalCounts.status.MATCH' | translate }}</mat-option>
+        <mat-option value="SURPLUS">{{ 'physicalCounts.status.SURPLUS' | translate }}</mat-option>
+        <mat-option value="SHORTAGE">{{ 'physicalCounts.status.SHORTAGE' | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'common.productLot' | translate }}</mat-label>
+      <mat-select [value]="selectedLotId()" (selectionChange)="selectedLotId.set($event.value)">
+        <mat-option [value]="0">{{ 'common.allLots' | translate }}</mat-option>
+        @for (lot of lots(); track lot.id) {
+          <mat-option [value]="lot.id">{{ lotLabel(lot.id) }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  @if (filtered().length === 0) {
+    <p class="empty-state" role="status">
+      {{ (counts().length ? 'physicalCounts.noResults' : 'physicalCounts.empty') | translate }}
+    </p>
+  } @else {
+    <div
+      class="table-container"
+      role="region"
+      [attr.aria-label]="'physicalCounts.table' | translate"
+      tabindex="0"
+    >
+      <table
+        mat-table
+        [dataSource]="pageCounts()"
+        [attr.aria-label]="'physicalCounts.history' | translate"
+      >
+        <ng-container matColumnDef="date"
+          ><th mat-header-cell *matHeaderCellDef>{{ 'common.date' | translate }}</th>
+          <td mat-cell *matCellDef="let count">{{ count.date }}</td></ng-container
+        >
+        <ng-container matColumnDef="product"
+          ><th mat-header-cell *matHeaderCellDef>{{ 'common.product' | translate }}</th>
+          <td mat-cell *matCellDef="let count">{{ productName(count.lotId) }}</td></ng-container
+        >
+        <ng-container matColumnDef="lot"
+          ><th mat-header-cell *matHeaderCellDef>{{ 'common.lot' | translate }}</th>
+          <td mat-cell *matCellDef="let count">{{ batchNumber(count.lotId) }}</td></ng-container
+        >
+        <ng-container matColumnDef="system"
+          ><th mat-header-cell *matHeaderCellDef>
+            {{ 'physicalCounts.systemQuantity' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let count">{{ count.systemQuantity }}</td></ng-container
+        >
+        <ng-container matColumnDef="physical"
+          ><th mat-header-cell *matHeaderCellDef>
+            {{ 'physicalCounts.physicalQuantity' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let count">{{ count.physicalQuantity }}</td></ng-container
+        >
+        <ng-container matColumnDef="difference"
+          ><th mat-header-cell *matHeaderCellDef>{{ 'physicalCounts.difference' | translate }}</th>
+          <td mat-cell *matCellDef="let count">
+            {{ count.difference > 0 ? '+' : '' }}{{ count.difference }}
+            <span
+              class="status"
+              [class.match]="count.difference === 0"
+              [class.surplus]="count.difference > 0"
+              [class.shortage]="count.difference < 0"
+              >{{ 'physicalCounts.status.' + status(count.difference) | translate }}</span
+            >
+          </td></ng-container
+        >
+        <ng-container matColumnDef="user"
+          ><th mat-header-cell *matHeaderCellDef>
+            {{ 'physicalCounts.responsibleUser' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let count">{{ userName(count.userId) }}</td></ng-container
+        >
+        <ng-container matColumnDef="observation"
+          ><th mat-header-cell *matHeaderCellDef>{{ 'physicalCounts.observation' | translate }}</th>
+          <td mat-cell *matCellDef="let count" class="observation">
+            {{ count.observation || '—' }}
+          </td></ng-container
+        >
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      </table>
+    </div>
+    <mat-paginator
+      [attr.aria-label]="'physicalCounts.pagination.label' | translate"
+      [length]="filtered().length"
+      [pageIndex]="pageIndex()"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="[5, 10, 25]"
+      [showFirstLastButtons]="true"
+      (page)="onPage($event)"
+    />
+  }
+</section>

@@ -1,3 +1,4 @@
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -6,11 +7,12 @@ import { IamStore } from '../../../../iam/application/iam.store';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatIconModule],
+  imports: [TranslatePipe, MatIconModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
+  readonly translate = inject(TranslateService);
   private readonly inventoryStore = inject(InventoryStore);
   private readonly iamStore = inject(IamStore);
 
@@ -53,6 +55,6 @@ export class Dashboard implements OnInit {
   getCategoryName(categoryId: number): string {
     const category = this.categories().find((category) => category.id === categoryId);
 
-    return category?.name ?? 'Sin categoría';
+    return category?.name ?? this.translate.instant('common.noCategory');
   }
 }

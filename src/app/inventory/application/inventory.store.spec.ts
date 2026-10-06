@@ -50,6 +50,6 @@ describe('InventoryStore lots CRUD', () => {
     store.deleteLot(1);
     http.expectOne(`${baseUrl}/1`).flush({}, { status: 500, statusText: 'Server error' });
     expect(store.lots()).toEqual([lot]);
-    expect(store.lotsError()).toContain('Could not delete');
+    expect(store.lotsError()).toBe('inventoryErrors.deleteLot');
   });
 });
