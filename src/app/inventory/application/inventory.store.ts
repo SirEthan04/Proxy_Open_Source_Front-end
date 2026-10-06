@@ -7,6 +7,8 @@ import { ProductApi } from '../infrastructure/product-api';
 import { CategoryApi } from '../infrastructure/category-api';
 import { Lot } from '../domain/model/lot.entity';
 import { LotApi } from '../infrastructure/lot-api';
+import { InventoryMovement } from '../domain/model/inventory-movement.entity';
+import { InventoryMovementApi } from '../infrastructure/inventory-movement-api';
 
 @Injectable({
   providedIn: 'root',
@@ -15,18 +17,49 @@ export class InventoryStore {
   private readonly productApi = inject(ProductApi);
   private readonly categoryApi = inject(CategoryApi);
   private readonly lotApi = inject(LotApi);
+  private readonly movementApi = inject(InventoryMovementApi);
 
   private readonly productsSignal = signal<Product[]>([]);
   private readonly categoriesSignal = signal<Category[]>([]);
   private readonly lotsSignal = signal<Lot[]>([]);
   private readonly lotsLoadingSignal = signal(false);
   private readonly lotsErrorSignal = signal<string | null>(null);
+  private readonly movementsSignal = signal<InventoryMovement[]>([]);
+  private readonly movementsLoadingSignal = signal(false);
+  private readonly movementsErrorSignal = signal<string | null>(null);
 
   readonly products = this.productsSignal.asReadonly();
   readonly categories = this.categoriesSignal.asReadonly();
   readonly lots = this.lotsSignal.asReadonly();
   readonly lotsLoading = this.lotsLoadingSignal.asReadonly();
   readonly lotsError = this.lotsErrorSignal.asReadonly();
+  readonly movements = this.movementsSignal.asReadonly();
+  readonly movementsLoading = this.movementsLoadingSignal.asReadonly();
+  readonly movementsError = this.movementsErrorSignal.asReadonly();
+
+  loadMovements(): void {
+    this.movementsLoadingSignal.set(true);
+    this.movementsErrorSignal.set(null);
+    this.movementApi.getAll().subscribe({
+      next: (movements) => {
+        this.movementsSignal.set(movements);
+        this.movementsLoadingSignal.set(false);
+      },
+      error: () => {
+        this.movementsLoadingSignal.set(false);
+        this.movementsErrorSignal.set('Could not load movements. Please try again.');
+      },
+    });
+  }
+
+  createMovement(movement: InventoryMovement): void {
+    this.movementsErrorSignal.set(null);
+    this.movementApi.create(movement).subscribe({
+      next: (createdMovement) =>
+        this.movementsSignal.update((movements) => [createdMovement, ...movements]),
+      error: () => this.movementsErrorSignal.set('Could not create the movement. Please try again.'),
+    });
+  }
 
   loadLots(): void {
     this.lotsLoadingSignal.set(true);

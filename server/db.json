@@ -129,5 +129,6 @@
       "password": "employee123",
       "role": "EMPLOYEE"
     }
-  ]
+  ],
+  "movements": []
 }
