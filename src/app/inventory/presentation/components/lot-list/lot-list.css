@@ -1,6 +1,6 @@
-﻿.inventory-panel {
-  background: white;
-  border: 1px solid #e5e7eb;
+.inventory-panel {
+  background: var(--bodego-surface);
+  border: 1px solid var(--bodego-border);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -11,7 +11,7 @@
 }
 
 .table-container:focus-visible {
-  outline: 2px solid #374151;
+  outline: 2px solid var(--bodego-text-secondary);
   outline-offset: -2px;
 }
 .lots-table {
@@ -24,7 +24,7 @@
 
 .lots-table th {
   font-weight: 600;
-  color: #374151;
+  color: var(--bodego-text-secondary);
 }
 
 .lots-table td,
@@ -46,7 +46,7 @@
 
 .product-info span {
   font-size: 12px;
-  color: #666;
+  color: var(--bodego-text-muted);
 }
 
 .status {
@@ -58,13 +58,13 @@
 }
 
 .status.active {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--bodego-success-soft);
+  color: var(--bodego-success);
 }
 
 .status.inactive {
-  background: #eeeeee;
-  color: #616161;
+  background: var(--bodego-surface-muted);
+  color: var(--bodego-text-secondary);
 }
 
 .empty-state {
@@ -73,7 +73,7 @@
   align-items: center;
   justify-content: center;
   padding: 48px;
-  color: #595959;
+  color: var(--bodego-text-secondary);
 }
 
 .empty-state mat-icon {
@@ -97,10 +97,10 @@
 }
 
 .lots-table tr[mat-row]:hover {
-  background: #f9fafb;
+  background: var(--bodego-background);
 }
 mat-paginator {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--bodego-border);
 }
 
 @media (max-width: 768px) {
