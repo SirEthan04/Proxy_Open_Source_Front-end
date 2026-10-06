@@ -57,5 +57,21 @@
       "active": true,
       "id": 4
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "BodeGo Admin",
+      "email": "admin@bodego.com",
+      "password": "admin123",
+      "role": "ADMIN"
+    },
+    {
+      "id": 2,
+      "name": "BodeGo Employee",
+      "email": "employee@bodego.com",
+      "password": "employee123",
+      "role": "EMPLOYEE"
+    }
   ]
 }
