@@ -4,7 +4,7 @@
     <button
       type="button"
       class="menu-toggle"
-      aria-label="Open navigation menu"
+      [attr.aria-label]="'navigation.openMenu' | translate"
       [attr.aria-expanded]="sidebarOpen()"
       aria-controls="main-sidebar"
       (click)="toggleSidebar()"
@@ -36,7 +36,7 @@
       <button
         type="button"
         class="sidebar-close"
-        aria-label="Close navigation menu"
+        [attr.aria-label]="'navigation.closeMenu' | translate"
         (click)="closeSidebar()"
       >
         <mat-icon>close</mat-icon>
@@ -48,7 +48,7 @@
 
       <div class="brand-text">
         <strong>BodeGo</strong>
-        <span>Inventory Management</span>
+        <span>{{ 'navigation.inventoryManagement' | translate }}</span>
       </div>
 
     </div>
@@ -62,7 +62,7 @@
         (click)="closeSidebar()"
       >
         <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
+        <span>{{ 'navigation.dashboard' | translate }}</span>
       </a>
 
 
@@ -72,7 +72,7 @@
         (click)="closeSidebar()"
       >
         <mat-icon>inventory_2</mat-icon>
-        <span>Products</span>
+        <span>{{ 'navigation.products' | translate }}</span>
       </a>
 
 
@@ -82,7 +82,7 @@
         (click)="closeSidebar()"
       >
         <mat-icon>layers</mat-icon>
-        <span>Lots</span>
+        <span>{{ 'navigation.lots' | translate }}</span>
       </a>
 
 
@@ -92,17 +92,17 @@
         (click)="closeSidebar()"
       >
         <mat-icon>swap_horiz</mat-icon>
-        <span>Movements</span>
+        <span>{{ 'navigation.movements' | translate }}</span>
       </a>
 
 
       <a
-        routerLink="/counts"
+        routerLink="/physical-counts"
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
         <mat-icon>fact_check</mat-icon>
-        <span>Physical Counts</span>
+        <span>{{ 'navigation.physicalCounts' | translate }}</span>
       </a>
 
 
@@ -112,13 +112,14 @@
         (click)="closeSidebar()"
       >
         <mat-icon>notifications</mat-icon>
-        <span>Alerts</span>
+        <span>{{ 'navigation.alerts' | translate }}</span>
       </a>
 
     </nav>
 
 
     <div class="sidebar-footer">
+      <app-language-switcher />
 
       @if (currentUser(); as user) {
 
@@ -135,10 +136,7 @@
             </strong>
 
             <span>
-          {{ user.role === 'ADMIN'
-              ? 'Administrator'
-              : 'Employee'
-              }}
+          {{ (user.role === 'ADMIN' ? 'navigation.administrator' : 'navigation.employee') | translate }}
         </span>
 
           </div>
@@ -156,7 +154,7 @@
           (click)="closeSidebar()"
         >
           <mat-icon>settings</mat-icon>
-          <span>Settings</span>
+          <span>{{ 'navigation.settings' | translate }}</span>
         </a>
 
       }
@@ -168,7 +166,7 @@
         (click)="signOut()"
       >
         <mat-icon>logout</mat-icon>
-        <span>Sign out</span>
+        <span>{{ 'navigation.signOut' | translate }}</span>
       </button>
 
     </div>

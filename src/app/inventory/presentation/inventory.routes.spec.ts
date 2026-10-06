@@ -1,3 +1,4 @@
+import { provideTestTranslations } from '../../shared/application/translation.testing';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
@@ -12,7 +13,7 @@ describe('Inventory routes inside the authenticated Layout', () => {
   beforeEach(() => {
     localStorage.removeItem('bodego_user');
     TestBed.configureTestingModule({
-      providers: [provideRouter(routes), provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideTestTranslations(), provideRouter(routes), provideHttpClient(), provideHttpClientTesting()],
     });
   });
   afterEach(() => {

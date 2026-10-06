@@ -1,3 +1,4 @@
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Component, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,48 +11,49 @@ import { Product } from '../../../domain/model/product.entity';
 
 @Component({
   selector: 'app-movement-form',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
+  imports: [TranslatePipe, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="movement-form">
       <mat-form-field appearance="outline">
-        <mat-label>Lot</mat-label>
+        <mat-label>{{ 'common.lot' | translate }}</mat-label>
         <mat-select formControlName="lotId" required>
           @for (lot of lots(); track lot.id) {
             <mat-option [value]="lot.id">{{ getLotLabel(lot) }}</mat-option>
           }
         </mat-select>
-        @if (form.controls.lotId.hasError('required')) { <mat-error>Select a lot.</mat-error> }
+        @if (form.controls.lotId.hasError('required')) { <mat-error>{{ 'physicalCounts.validation.lotRequired' | translate }}</mat-error> }
       </mat-form-field>
-      @if (lots().length === 0) { <p role="status">No lots available. Register a lot first.</p> }
+      @if (lots().length === 0) { <p role="status">{{ 'physicalCounts.noLots' | translate }}</p> }
       <mat-form-field appearance="outline">
-        <mat-label>Movement type</mat-label>
+        <mat-label>{{ 'movements.type' | translate }}</mat-label>
         <mat-select formControlName="type" required>
-          <mat-option value="ENTRY">Entry</mat-option>
-          <mat-option value="EXIT">Exit</mat-option>
-          <mat-option value="ADJUSTMENT">Adjustment</mat-option>
+          <mat-option value="ENTRY">{{ 'movements.entry' | translate }}</mat-option>
+          <mat-option value="EXIT">{{ 'movements.exit' | translate }}</mat-option>
+          <mat-option value="ADJUSTMENT">{{ 'movements.adjustment' | translate }}</mat-option>
         </mat-select>
-        @if (form.controls.type.invalid && form.controls.type.touched) { <mat-error>Select a type.</mat-error> }
+        @if (form.controls.type.invalid && form.controls.type.touched) { <mat-error>{{ 'movements.typeValidation' | translate }}</mat-error> }
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Quantity</mat-label>
+        <mat-label>{{ 'common.quantity' | translate }}</mat-label>
         <input matInput type="number" min="0.01" step="any" formControlName="quantity" required />
-        @if (form.controls.quantity.invalid && form.controls.quantity.touched) { <mat-error>Enter a quantity greater than 0.</mat-error> }
+        @if (form.controls.quantity.invalid && form.controls.quantity.touched) { <mat-error>{{ 'movements.quantityValidation' | translate }}</mat-error> }
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Date</mat-label>
+        <mat-label>{{ 'common.date' | translate }}</mat-label>
         <input matInput type="date" formControlName="date" required />
-        @if (form.controls.date.invalid && form.controls.date.touched) { <mat-error>Enter a valid date.</mat-error> }
+        @if (form.controls.date.invalid && form.controls.date.touched) { <mat-error>{{ 'physicalCounts.validation.date' | translate }}</mat-error> }
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Reason</mat-label>
+        <mat-label>{{ 'movements.reason' | translate }}</mat-label>
         <textarea matInput rows="3" formControlName="reason"></textarea>
       </mat-form-field>
-      <div class="form-actions"><button mat-flat-button type="submit" [disabled]="form.invalid || lots().length === 0">Record movement</button></div>
+      <div class="form-actions"><button mat-flat-button type="submit" [disabled]="form.invalid || lots().length === 0">{{ 'movements.record' | translate }}</button></div>
     </form>
   `,
   styles: `:host { display: block; } .movement-form { display: grid; gap: 4px; } .form-actions { display: flex; justify-content: flex-end; }`,
 })
 export class MovementForm {
+  readonly translate = inject(TranslateService);
   private readonly formBuilder = inject(FormBuilder);
   readonly lots = input.required<Lot[]>();
   readonly products = input.required<Product[]>();
@@ -82,7 +84,7 @@ export class MovementForm {
   }
 
   getLotLabel(lot: Lot): string {
-    const productName = this.products().find((product) => product.id === lot.productId)?.name ?? 'Product unavailable';
+    const productName = this.products().find((product) => product.id === lot.productId)?.name ?? this.translate.instant('common.productUnavailable');
     return `${productName} — ${lot.batchNumber}`;
   }
 

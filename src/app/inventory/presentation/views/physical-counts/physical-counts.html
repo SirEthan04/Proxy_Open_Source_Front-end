@@ -1,0 +1,57 @@
+<div class="counts-page">
+  <header class="counts-header">
+    <div>
+      <h1>{{ 'physicalCounts.title' | translate }}</h1>
+      <p>{{ 'physicalCounts.description' | translate }}</p>
+    </div>
+    <button
+      mat-flat-button
+      type="button"
+      [disabled]="loading() || !!error() || !currentUser()"
+      (click)="onCreate()"
+    >
+      <mat-icon>add</mat-icon>{{ 'physicalCounts.newCount' | translate }}
+    </button>
+  </header>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <mat-icon>fact_check</mat-icon>
+      <div>
+        <span>{{ 'physicalCounts.totalCounts' | translate }}</span
+        ><strong>{{ counts().length }}</strong>
+      </div>
+    </div>
+    <div class="summary-card">
+      <mat-icon>check_circle</mat-icon>
+      <div>
+        <span>{{ 'physicalCounts.matches' | translate }}</span
+        ><strong>{{ matches() }}</strong>
+      </div>
+    </div>
+    <div class="summary-card">
+      <mat-icon>difference</mat-icon>
+      <div>
+        <span>{{ 'physicalCounts.discrepancies' | translate }}</span
+        ><strong>{{ discrepancies() }}</strong>
+      </div>
+    </div>
+  </div>
+  @if (error()) {
+    <div class="error-state">
+      <p role="alert">{{ error()! | translate }}</p>
+      <button mat-button type="button" (click)="reload()">
+        {{ 'physicalCounts.reload' | translate }}
+      </button>
+    </div>
+  }
+  @if (loading()) {
+    <p role="status">{{ 'physicalCounts.loading' | translate }}</p>
+  } @else {
+    <app-physical-count-list
+      [counts]="counts()"
+      [lots]="lots()"
+      [products]="products()"
+      [currentUser]="currentUser()"
+    />
+  }
+</div>

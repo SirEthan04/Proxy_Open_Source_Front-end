@@ -1,9 +1,11 @@
+import { provideTestTranslations } from '../../../../shared/application/translation.testing';
 import { TestBed } from '@angular/core/testing';
 import { LotList } from './lot-list';
 import { Lot } from '../../../domain/model/lot.entity';
 import { Product } from '../../../domain/model/product.entity';
 
 describe('LotList', () => {
+  beforeEach(() => TestBed.configureTestingModule({ providers: [provideTestTranslations()] }));
   function setup() {
     const fixture = TestBed.createComponent(LotList);
     fixture.componentRef.setInput('products', [

@@ -1,0 +1,76 @@
+.inventory-panel {
+  background: var(--bodego-surface);
+  border: 1px solid var(--bodego-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.table-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px 20px 4px;
+}
+.search-field {
+  flex: 1;
+  min-width: 240px;
+}
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+.table-container:focus-visible {
+  outline: 2px solid var(--bodego-primary-hover);
+  outline-offset: -2px;
+}
+table {
+  width: 100%;
+  min-width: 1100px;
+}
+td,
+th {
+  padding: 12px 20px;
+}
+.observation {
+  max-width: 320px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.empty-state {
+  padding: 48px;
+  text-align: center;
+  color: var(--bodego-text-secondary);
+}
+.status {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.match {
+  background: #e8f5e9;
+  color: #216e39;
+}
+.surplus {
+  background: #e3f2fd;
+  color: #164b78;
+}
+.shortage {
+  background: #fff1f0;
+  color: #a12822;
+}
+mat-paginator {
+  border-top: 1px solid var(--bodego-border);
+}
+@media (max-width: 768px) {
+  .table-tools {
+    flex-direction: column;
+  }
+  .search-field {
+    min-width: 0;
+  }
+  .table-tools mat-form-field {
+    width: 100%;
+  }
+}

@@ -33,7 +33,7 @@
       "name": "Arroz Costeño Premium 1kg",
       "description": "Arroz extra",
       "price": 5.2,
-      "minimumStock": 15,
+      "minimumStock": 5,
       "active": true,
       "id": 2
     },
@@ -88,13 +88,13 @@
       "active": true
     },
     {
-      "id": 3,
       "productId": 2,
       "batchNumber": "AR-2026-001",
-      "quantity": 30,
+      "quantity": 2,
       "expirationDate": "2027-10-01",
       "entryDate": "2026-10-01",
-      "active": true
+      "active": true,
+      "id": 3
     },
     {
       "id": 4,
@@ -150,6 +150,7 @@
     }
   ],
   "movements": [],
+  "physicalCounts": [],
   "alerts": [
     {
       "productId": 5,
@@ -160,6 +161,16 @@
       "generatedAt": "2026-10-06T05:36:45.788Z",
       "attended": true,
       "id": 1
+    },
+    {
+      "productId": 2,
+      "lotId": null,
+      "type": "LOW_STOCK",
+      "level": "WARNING",
+      "message": "Available stock (2) is at or below the minimum (5).",
+      "generatedAt": "2026-10-06T08:19:04.277Z",
+      "attended": false,
+      "id": 2
     }
   ]
 }

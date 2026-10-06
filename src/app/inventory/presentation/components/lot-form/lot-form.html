@@ -1,43 +1,43 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="lot-form">
   <mat-form-field appearance="outline">
-    <mat-label>Product</mat-label>
+    <mat-label>{{ 'common.product' | translate }}</mat-label>
     <mat-select formControlName="productId" required>
       @for (product of products(); track product.id) {
         <mat-option [value]="product.id">{{ product.name }}</mat-option>
       }
     </mat-select>
-    <mat-error>Select a registered product.</mat-error>
+    <mat-error>{{ 'lots.selectProduct' | translate }}</mat-error>
   </mat-form-field>
   @if (products().length === 0) {
-    <p role="status">No products available. Register a product before creating a lot.</p>
+    <p role="status">{{ 'lots.noProducts' | translate }}</p>
   }
   <mat-form-field appearance="outline">
-    <mat-label>Batch number</mat-label>
+    <mat-label>{{ 'lots.batchNumber' | translate }}</mat-label>
     <input matInput formControlName="batchNumber" required />
-    <mat-error>Batch number is required.</mat-error>
+    <mat-error>{{ 'lots.batchRequired' | translate }}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <mat-label>Quantity</mat-label>
+    <mat-label>{{ 'common.quantity' | translate }}</mat-label>
     <input matInput type="number" min="0" step="any" formControlName="quantity" required />
-    <mat-error>Enter a quantity greater than or equal to zero.</mat-error>
+    <mat-error>{{ 'lots.quantityValidation' | translate }}</mat-error>
   </mat-form-field>
   <div class="form-row">
     <mat-form-field appearance="outline">
-      <mat-label>Entry date</mat-label>
+      <mat-label>{{ 'lots.entryDate' | translate }}</mat-label>
       <input matInput type="date" formControlName="entryDate" required />
-      <mat-error>Enter a valid entry date.</mat-error>
+      <mat-error>{{ 'lots.entryDateValidation' | translate }}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Expiration date</mat-label>
+      <mat-label>{{ 'lots.expirationDate' | translate }}</mat-label>
       <input matInput type="date" formControlName="expirationDate" />
-      <mat-hint>Optional</mat-hint>
-      <mat-error>Enter a valid expiration date.</mat-error>
+      <mat-hint>{{ 'common.optional' | translate }}</mat-hint>
+      <mat-error>{{ 'lots.expirationDateValidation' | translate }}</mat-error>
     </mat-form-field>
   </div>
-  <mat-checkbox formControlName="active">Active lot</mat-checkbox>
+  <mat-checkbox formControlName="active">{{ 'lots.activeLot' | translate }}</mat-checkbox>
   <div class="form-actions">
     <button mat-flat-button type="submit" [disabled]="form.invalid">
-      {{ lot() ? 'Update lot' : 'Create lot' }}
+      {{ lot() ? ('lots.update' | translate) : ('lots.create' | translate) }}
     </button>
   </div>
 </form>

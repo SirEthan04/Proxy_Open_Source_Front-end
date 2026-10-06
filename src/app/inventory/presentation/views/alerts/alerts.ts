@@ -1,3 +1,4 @@
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,37 +13,37 @@ import { Alert } from '../../../domain/model/alert.entity';
 
 @Component({
   selector: 'app-alerts',
-  imports: [DatePipe, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatTableModule],
+  imports: [TranslatePipe, DatePipe, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSelectModule, MatTableModule],
   template: `
     <main class="alerts-page">
-      <header class="page-header"><div><h1>Inventory alerts</h1><p>Review stock and expiration conditions detected in your inventory.</p></div><button mat-stroked-button type="button" (click)="reload()"><mat-icon>refresh</mat-icon> Refresh</button></header>
-      <section class="summary-grid" aria-label="Alert summary">
-        <article class="summary-card"><mat-icon>notifications</mat-icon><div><span>Total alerts</span><strong>{{ alerts().length }}</strong></div></article>
-        <article class="summary-card"><mat-icon>pending_actions</mat-icon><div><span>Pending</span><strong>{{ pendingAlerts() }}</strong></div></article>
-        <article class="summary-card"><mat-icon>task_alt</mat-icon><div><span>Attended</span><strong>{{ attendedAlerts() }}</strong></div></article>
-        <article class="summary-card critical"><mat-icon>error</mat-icon><div><span>Critical</span><strong>{{ criticalAlerts() }}</strong></div></article>
+      <header class="page-header"><div><h1>{{ 'alerts.title' | translate }}</h1><p>{{ 'alerts.description' | translate }}</p></div><button mat-stroked-button type="button" (click)="reload()"><mat-icon>refresh</mat-icon> {{ 'common.refresh' | translate }}</button></header>
+      <section class="summary-grid" [attr.aria-label]="'alerts.summary' | translate">
+        <article class="summary-card"><mat-icon>notifications</mat-icon><div><span>{{ 'alerts.total' | translate }}</span><strong>{{ alerts().length }}</strong></div></article>
+        <article class="summary-card"><mat-icon>pending_actions</mat-icon><div><span>{{ 'alerts.pending' | translate }}</span><strong>{{ pendingAlerts() }}</strong></div></article>
+        <article class="summary-card"><mat-icon>task_alt</mat-icon><div><span>{{ 'alerts.attended' | translate }}</span><strong>{{ attendedAlerts() }}</strong></div></article>
+        <article class="summary-card critical"><mat-icon>error</mat-icon><div><span>{{ 'alerts.critical' | translate }}</span><strong>{{ criticalAlerts() }}</strong></div></article>
       </section>
-      @if (error()) { <div class="error-state"><p role="alert">{{ error() }}</p><button mat-button type="button" (click)="reload()">Try again</button></div> }
-      <section class="panel" aria-label="Inventory alerts">
+      @if (error()) { <div class="error-state"><p role="alert">{{ error()! | translate }}</p><button mat-button type="button" (click)="reload()">{{ 'common.retry' | translate }}</button></div> }
+      <section class="panel" [attr.aria-label]="'alerts.title' | translate">
         <div class="filters">
-          <mat-form-field appearance="outline" class="search"><mat-label>Search alerts</mat-label><mat-icon matPrefix>search</mat-icon><input matInput type="search" placeholder="Product, lot or message" [value]="searchTerm()" (input)="onSearch($event)" /></mat-form-field>
-          <mat-form-field appearance="outline"><mat-label>Type</mat-label><mat-select [value]="typeFilter()" (selectionChange)="typeFilter.set($event.value)"><mat-option value="all">All types</mat-option><mat-option value="LOW_STOCK">Low stock</mat-option><mat-option value="EXPIRED">Expired</mat-option></mat-select></mat-form-field>
-          <mat-form-field appearance="outline"><mat-label>Level</mat-label><mat-select [value]="levelFilter()" (selectionChange)="levelFilter.set($event.value)"><mat-option value="all">All levels</mat-option><mat-option value="WARNING">Warning</mat-option><mat-option value="CRITICAL">Critical</mat-option></mat-select></mat-form-field>
-          <mat-form-field appearance="outline"><mat-label>Status</mat-label><mat-select [value]="statusFilter()" (selectionChange)="statusFilter.set($event.value)"><mat-option value="all">All statuses</mat-option><mat-option value="pending">Pending</mat-option><mat-option value="attended">Attended</mat-option></mat-select></mat-form-field>
+          <mat-form-field appearance="outline" class="search"><mat-label>{{ 'alerts.search' | translate }}</mat-label><mat-icon matPrefix>search</mat-icon><input matInput type="search" [placeholder]="'alerts.searchPlaceholder' | translate" [value]="searchTerm()" (input)="onSearch($event)" /></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>{{ 'common.type' | translate }}</mat-label><mat-select [value]="typeFilter()" (selectionChange)="typeFilter.set($event.value)"><mat-option value="all">{{ 'common.allTypes' | translate }}</mat-option><mat-option value="LOW_STOCK">{{ 'alerts.lowStock' | translate }}</mat-option><mat-option value="EXPIRED">{{ 'alerts.expired' | translate }}</mat-option></mat-select></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>{{ 'alerts.level' | translate }}</mat-label><mat-select [value]="levelFilter()" (selectionChange)="levelFilter.set($event.value)"><mat-option value="all">{{ 'alerts.allLevels' | translate }}</mat-option><mat-option value="WARNING">{{ 'alerts.warning' | translate }}</mat-option><mat-option value="CRITICAL">{{ 'alerts.critical' | translate }}</mat-option></mat-select></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>{{ 'common.status' | translate }}</mat-label><mat-select [value]="statusFilter()" (selectionChange)="statusFilter.set($event.value)"><mat-option value="all">{{ 'common.allStatuses' | translate }}</mat-option><mat-option value="pending">{{ 'alerts.pending' | translate }}</mat-option><mat-option value="attended">{{ 'alerts.attended' | translate }}</mat-option></mat-select></mat-form-field>
         </div>
-        @if (loading()) { <p class="state" role="status">Loading alerts…</p> }
-        @else if (filtered().length === 0) { <div class="empty" role="status"><mat-icon>notifications_none</mat-icon><p>{{ alerts().length ? 'No alerts match these filters.' : 'No inventory alerts at this time.' }}</p></div> }
+        @if (loading()) { <p class="state" role="status">{{ 'alerts.loading' | translate }}</p> }
+        @else if (filtered().length === 0) { <div class="empty" role="status"><mat-icon>notifications_none</mat-icon><p>{{ alerts().length ? ('alerts.noResults' | translate) : ('alerts.empty' | translate) }}</p></div> }
         @else {
-          <div class="table-wrap" role="region" aria-label="Alerts table" tabindex="0"><table mat-table [dataSource]="pageAlerts()" aria-label="Inventory alerts">
-            <ng-container matColumnDef="alert"><th mat-header-cell *matHeaderCellDef>Alert</th><td mat-cell *matCellDef="let alert"><strong>{{ typeName(alert) }}</strong><span class="message">{{ alert.message }}</span></td></ng-container>
-            <ng-container matColumnDef="related"><th mat-header-cell *matHeaderCellDef>Product / lot</th><td mat-cell *matCellDef="let alert"><strong>{{ productName(alert.productId) }}</strong>@if (alert.lotId !== null) {<span class="message">{{ lotName(alert.lotId) }}</span>}</td></ng-container>
-            <ng-container matColumnDef="level"><th mat-header-cell *matHeaderCellDef>Level</th><td mat-cell *matCellDef="let alert"><span class="chip" [class.warning]="alert.level === 'WARNING'" [class.critical]="alert.level === 'CRITICAL'">{{ alert.level === 'WARNING' ? 'Warning' : 'Critical' }}</span></td></ng-container>
-            <ng-container matColumnDef="generated"><th mat-header-cell *matHeaderCellDef>Generated</th><td mat-cell *matCellDef="let alert">{{ alert.generatedAt | date:'medium' }}</td></ng-container>
-            <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let alert"><span class="chip" [class.pending]="!alert.attended" [class.attended]="alert.attended">{{ alert.attended ? 'Attended' : 'Pending' }}</span></td></ng-container>
-            <ng-container matColumnDef="action"><th mat-header-cell *matHeaderCellDef>Action</th><td mat-cell *matCellDef="let alert">@if (!alert.attended) {<button mat-button type="button" [attr.aria-label]="'Mark alert for ' + productName(alert.productId) + ' as attended'" (click)="attend(alert)"><mat-icon>check</mat-icon> Attend</button>}</td></ng-container>
+          <div class="table-wrap" role="region" [attr.aria-label]="'alerts.table' | translate" tabindex="0"><table mat-table [dataSource]="pageAlerts()" [attr.aria-label]="'alerts.title' | translate">
+            <ng-container matColumnDef="alert"><th mat-header-cell *matHeaderCellDef>{{ 'alerts.alert' | translate }}</th><td mat-cell *matCellDef="let alert"><strong>{{ typeName(alert) }}</strong><span class="message">{{ alertMessage(alert) }}</span></td></ng-container>
+            <ng-container matColumnDef="related"><th mat-header-cell *matHeaderCellDef>{{ 'common.productLot' | translate }}</th><td mat-cell *matCellDef="let alert"><strong>{{ productName(alert.productId) }}</strong>@if (alert.lotId !== null) {<span class="message">{{ lotName(alert.lotId) }}</span>}</td></ng-container>
+            <ng-container matColumnDef="level"><th mat-header-cell *matHeaderCellDef>{{ 'alerts.level' | translate }}</th><td mat-cell *matCellDef="let alert"><span class="chip" [class.warning]="alert.level === 'WARNING'" [class.critical]="alert.level === 'CRITICAL'">{{ alert.level === 'WARNING' ? ('alerts.warning' | translate) : ('alerts.critical' | translate) }}</span></td></ng-container>
+            <ng-container matColumnDef="generated"><th mat-header-cell *matHeaderCellDef>{{ 'alerts.generated' | translate }}</th><td mat-cell *matCellDef="let alert">{{ alert.generatedAt | date:'medium':undefined:(translate.currentLang() ?? 'en') }}</td></ng-container>
+            <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>{{ 'common.status' | translate }}</th><td mat-cell *matCellDef="let alert"><span class="chip" [class.pending]="!alert.attended" [class.attended]="alert.attended">{{ alert.attended ? ('alerts.attended' | translate) : ('alerts.pending' | translate) }}</span></td></ng-container>
+            <ng-container matColumnDef="action"><th mat-header-cell *matHeaderCellDef>{{ 'common.action' | translate }}</th><td mat-cell *matCellDef="let alert">@if (!alert.attended) {<button mat-button type="button" [attr.aria-label]="'alerts.attendLabel' | translate: { product: productName(alert.productId) }" (click)="attend(alert)"><mat-icon>check</mat-icon> {{ 'alerts.attend' | translate }}</button>}</td></ng-container>
             <tr mat-header-row *matHeaderRowDef="columns"></tr><tr mat-row *matRowDef="let row; columns: columns"></tr>
           </table></div>
-          <mat-paginator aria-label="Alert pagination" [length]="filtered().length" [pageIndex]="pageIndex()" [pageSize]="pageSize()" [pageSizeOptions]="[5, 10, 25]" [showFirstLastButtons]="true" (page)="onPage($event)" />
+          <mat-paginator [attr.aria-label]="'alerts.pagination' | translate" [length]="filtered().length" [pageIndex]="pageIndex()" [pageSize]="pageSize()" [pageSizeOptions]="[5, 10, 25]" [showFirstLastButtons]="true" (page)="onPage($event)" />
         }
       </section>
     </main>
@@ -52,6 +53,7 @@ import { Alert } from '../../../domain/model/alert.entity';
   `,
 })
 export class Alerts implements OnInit {
+  readonly translate = inject(TranslateService);
   private readonly store = inject(InventoryStore);
   readonly alerts = this.store.alerts;
   readonly products = this.store.products;
@@ -69,9 +71,10 @@ export class Alerts implements OnInit {
   readonly attendedAlerts = computed(() => this.alerts().filter((alert) => alert.attended).length);
   readonly criticalAlerts = computed(() => this.alerts().filter((alert) => alert.level === 'CRITICAL').length);
   readonly filtered = computed(() => {
+    this.translate.currentLang();
     const term = this.searchTerm().trim().toLowerCase();
     return this.alerts().filter((alert) => {
-      const text = `${alert.message} ${this.productName(alert.productId)} ${this.lotName(alert.lotId)}`.toLowerCase();
+      const text = `${this.alertMessage(alert)} ${this.productName(alert.productId)} ${this.lotName(alert.lotId)}`.toLowerCase();
       return (!term || text.includes(term)) && (this.typeFilter() === 'all' || alert.type === this.typeFilter()) && (this.levelFilter() === 'all' || alert.level === this.levelFilter()) && (this.statusFilter() === 'all' || (this.statusFilter() === 'attended') === alert.attended);
     });
   });
@@ -80,9 +83,15 @@ export class Alerts implements OnInit {
   ngOnInit(): void { this.reload(); }
   reload(): void { this.store.loadAlerts(); }
   attend(alert: Alert): void { this.store.attendAlert(alert); }
-  productName(id: number | null): string { return this.products().find((product) => product.id === id)?.name ?? 'Product unavailable'; }
-  lotName(id: number | null): string { return this.lots().find((lot) => lot.id === id)?.batchNumber ?? 'Lot unavailable'; }
-  typeName(alert: Alert): string { return alert.type === 'LOW_STOCK' ? 'Low stock' : 'Expired lot'; }
+  productName(id: number | null): string { return this.products().find((product) => product.id === id)?.name ?? this.translate.instant('common.productUnavailable'); }
+  lotName(id: number | null): string { return this.lots().find((lot) => lot.id === id)?.batchNumber ?? this.translate.instant('common.lotUnavailable'); }
+  typeName(alert: Alert): string { return alert.type === 'LOW_STOCK' ? this.translate.instant('alerts.lowStock') : this.translate.instant('alerts.expiredLot'); }
+  alertMessage(alert: Alert): string {
+    const stock = /^Available stock \(([^)]+)\) is at or below the minimum \(([^)]+)\)\.$/.exec(alert.message);
+    if (stock) return this.translate.instant('alerts.lowStockMessage', { stock: stock[1], minimum: stock[2] });
+    const expired = /^Lot (.+) expired on (\d{4}-\d{2}-\d{2})\.$/.exec(alert.message);
+    return expired ? this.translate.instant('alerts.expiredMessage', { batch: expired[1], date: expired[2] }) : alert.message;
+  }
   onSearch(event: Event): void { if (event.target instanceof HTMLInputElement) { this.searchTerm.set(event.target.value); this.pageIndex.set(0); } }
   onPage(event: PageEvent): void { this.pageSize.set(event.pageSize); this.pageIndex.set(event.pageIndex); }
 }

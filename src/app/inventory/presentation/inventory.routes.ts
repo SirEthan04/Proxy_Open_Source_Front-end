@@ -4,6 +4,10 @@ import { Dashboard } from './views/dashboard/dashboard';
 
 export const inventoryRoutes: Routes = [
   {
+    path: 'physical-counts',
+    loadComponent: () => import('./views/physical-counts/physical-counts').then((module) => module.PhysicalCounts),
+  },
+  {
     path: 'alerts',
     loadComponent: () => import('./views/alerts/alerts').then((module) => module.Alerts),
   },

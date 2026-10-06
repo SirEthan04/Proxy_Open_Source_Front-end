@@ -1,6 +1,7 @@
 <div class="sign-in-page">
 
   <div class="sign-in-card">
+    <app-language-switcher />
 
     <div class="sign-in-header">
 
@@ -11,7 +12,7 @@
       <h1>BodeGo</h1>
 
       <p>
-        Sign in to manage your inventory
+        {{ 'iam.signInDescription' | translate }}
       </p>
 
     </div>
@@ -25,7 +26,7 @@
 
       <mat-form-field appearance="outline">
 
-        <mat-label>Email</mat-label>
+        <mat-label>{{ 'iam.email' | translate }}</mat-label>
 
         <input
           matInput
@@ -36,13 +37,13 @@
 
         @if (form.controls.email.hasError('required')) {
           <mat-error>
-            Email is required.
+            {{ 'iam.emailRequired' | translate }}
           </mat-error>
         }
 
         @if (form.controls.email.hasError('email')) {
           <mat-error>
-            Enter a valid email.
+            {{ 'iam.validEmail' | translate }}
           </mat-error>
         }
 
@@ -51,7 +52,7 @@
 
       <mat-form-field appearance="outline">
 
-        <mat-label>Password</mat-label>
+        <mat-label>{{ 'iam.password' | translate }}</mat-label>
 
         <input
           matInput
@@ -61,7 +62,7 @@
 
         @if (form.controls.password.hasError('required')) {
           <mat-error>
-            Password is required.
+            {{ 'iam.passwordRequired' | translate }}
           </mat-error>
         }
 
@@ -71,7 +72,7 @@
       @if (loginError()) {
 
         <div class="login-error">
-          Invalid email or password.
+          {{ 'iam.invalidCredentials' | translate }}
         </div>
 
       }
@@ -82,7 +83,7 @@
         type="submit"
         [disabled]="form.invalid"
       >
-        Sign in
+        {{ 'iam.signIn' | translate }}
       </button>
 
     </form>

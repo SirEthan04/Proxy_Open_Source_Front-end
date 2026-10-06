@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,20 +11,20 @@ import { MovementList } from '../../components/movement-list/movement-list';
 
 @Component({
   selector: 'app-movements',
-  imports: [MovementList, MatButtonModule, MatIconModule],
+  imports: [TranslatePipe, MovementList, MatButtonModule, MatIconModule],
   template: `
     <div class="movements-page">
       <header class="movements-header">
-        <div><h1>Movements</h1><p>Review the inventory movement history and record stock events.</p></div>
-        <button mat-flat-button type="button" (click)="onCreate()"><mat-icon>add</mat-icon>Record movement</button>
+        <div><h1>{{ 'movements.title' | translate }}</h1><p>{{ 'movements.description' | translate }}</p></div>
+        <button mat-flat-button type="button" (click)="onCreate()"><mat-icon>add</mat-icon>{{ 'movements.record' | translate }}</button>
       </header>
       <div class="summary-grid">
-        <div class="summary-card"><div class="summary-icon"><mat-icon>swap_horiz</mat-icon></div><div class="summary-content"><span>Total movements</span><strong>{{ totalMovements() }}</strong></div></div>
-        <div class="summary-card"><div class="summary-icon"><mat-icon>south</mat-icon></div><div class="summary-content"><span>Entries</span><strong>{{ entries() }}</strong></div></div>
-        <div class="summary-card"><div class="summary-icon"><mat-icon>north</mat-icon></div><div class="summary-content"><span>Exits</span><strong>{{ exits() }}</strong></div></div>
+        <div class="summary-card"><div class="summary-icon"><mat-icon>swap_horiz</mat-icon></div><div class="summary-content"><span>{{ 'movements.total' | translate }}</span><strong>{{ totalMovements() }}</strong></div></div>
+        <div class="summary-card"><div class="summary-icon"><mat-icon>south</mat-icon></div><div class="summary-content"><span>{{ 'movements.entries' | translate }}</span><strong>{{ entries() }}</strong></div></div>
+        <div class="summary-card"><div class="summary-icon"><mat-icon>north</mat-icon></div><div class="summary-content"><span>{{ 'movements.exits' | translate }}</span><strong>{{ exits() }}</strong></div></div>
       </div>
-      @if (error()) { <div class="error-state"><p role="alert">{{ error() }}</p><button mat-button type="button" (click)="reload()">Reload movements</button></div> }
-      @if (loading()) { <p role="status">Loading movements...</p> } @else {
+      @if (error()) { <div class="error-state"><p role="alert">{{ error()! | translate }}</p><button mat-button type="button" (click)="reload()">{{ 'movements.reload' | translate }}</button></div> }
+      @if (loading()) { <p role="status">{{ 'movements.loading' | translate }}</p> } @else {
         <app-movement-list [movements]="movements()" [lots]="lots()" [products]="products()" />
       }
     </div>
