@@ -1,0 +1,192 @@
+.dashboard-page {
+  min-height: 100%;
+  padding: 24px;
+
+  background: #f8f9fa;
+}
+
+.dashboard-page > * {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+}
+
+.dashboard-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+}
+
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 20px;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 10px;
+  background: #f3f4f6;
+}
+
+.summary-icon mat-icon {
+  color: #374151;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-content span {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.summary-content strong {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+
+.dashboard-section {
+  overflow: hidden;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.section-header {
+  padding: 20px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.section-header h2 {
+  margin: 0;
+
+  font-size: 18px;
+}
+
+.section-header p {
+  margin: 5px 0 0;
+
+  font-size: 13px;
+  color: #6b7280;
+}
+
+
+.product-overview {
+  display: flex;
+  flex-direction: column;
+}
+
+.overview-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 16px 20px;
+
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.overview-item:last-child {
+  border-bottom: none;
+}
+
+.overview-product {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.overview-product strong {
+  font-size: 14px;
+}
+
+.overview-product span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+
+.status {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 16px;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status.active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status.inactive {
+  background: #eeeeee;
+  color: #616161;
+}
+
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 48px;
+
+  color: #777;
+}
+
+
+@media (max-width: 768px) {
+
+  .dashboard-page {
+    padding: 16px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

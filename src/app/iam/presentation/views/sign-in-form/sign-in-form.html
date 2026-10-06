@@ -1,0 +1,92 @@
+<div class="sign-in-page">
+
+  <div class="sign-in-card">
+
+    <div class="sign-in-header">
+
+      <div class="logo">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+
+      <h1>BodeGo</h1>
+
+      <p>
+        Sign in to manage your inventory
+      </p>
+
+    </div>
+
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="sign-in-form"
+    >
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Email</mat-label>
+
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          placeholder="admin@bodego.com"
+        >
+
+        @if (form.controls.email.hasError('required')) {
+          <mat-error>
+            Email is required.
+          </mat-error>
+        }
+
+        @if (form.controls.email.hasError('email')) {
+          <mat-error>
+            Enter a valid email.
+          </mat-error>
+        }
+
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Password</mat-label>
+
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+        >
+
+        @if (form.controls.password.hasError('required')) {
+          <mat-error>
+            Password is required.
+          </mat-error>
+        }
+
+      </mat-form-field>
+
+
+      @if (loginError()) {
+
+        <div class="login-error">
+          Invalid email or password.
+        </div>
+
+      }
+
+
+      <button
+        mat-flat-button
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Sign in
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

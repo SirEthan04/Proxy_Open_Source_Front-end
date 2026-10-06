@@ -1,0 +1,135 @@
+<div class="dashboard-page">
+
+  <div class="dashboard-header">
+
+    <div>
+      <h1>Dashboard</h1>
+
+      <p>
+        Overview of your inventory.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="summary-grid">
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Total products</span>
+        <strong>{{ totalProducts() }}</strong>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Active products</span>
+        <strong>{{ activeProducts() }}</strong>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        <mat-icon>category</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Categories</span>
+        <strong>{{ totalCategories() }}</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <section class="dashboard-section">
+
+    <div class="section-header">
+
+      <div>
+        <h2>Inventory overview</h2>
+
+        <p>
+          Recently registered products.
+        </p>
+      </div>
+
+    </div>
+
+
+    @if (recentProducts().length === 0) {
+
+      <div class="empty-state">
+
+        <mat-icon>inventory_2</mat-icon>
+
+        <p>
+          No products available.
+        </p>
+
+      </div>
+
+    } @else {
+
+      <div class="product-overview">
+
+        @for (
+          product of recentProducts();
+          track product.id
+          ) {
+
+          <div class="overview-item">
+
+            <div class="overview-product">
+
+              <strong>
+                {{ product.name }}
+              </strong>
+
+              <span>
+                {{ getCategoryName(product.categoryId) }}
+              </span>
+
+            </div>
+
+
+            <span
+              class="status"
+              [class.active]="product.active"
+              [class.inactive]="!product.active"
+            >
+              {{
+                product.active
+                  ? 'Active'
+                  : 'Inactive'
+              }}
+            </span>
+
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+  </section>
+
+</div>
