@@ -2,8 +2,8 @@
 <div class="products-header">
 
   <div>
-    <h1>Products</h1>
-    <p>Manage the products registered in your inventory.</p>
+    <h1>{{ 'products.title' | translate }}</h1>
+    <p>{{ 'products.description' | translate }}</p>
   </div>
 
   <button
@@ -12,7 +12,7 @@
     (click)="onCreate()"
   >
     <mat-icon>add</mat-icon>
-    New product
+    {{ 'products.new' | translate }}
   </button>
 
 </div>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="summary-content">
-      <span>Total products</span>
+      <span>{{ 'products.total' | translate }}</span>
       <strong>{{ totalProducts() }}</strong>
     </div>
 
@@ -39,7 +39,7 @@
     </div>
 
     <div class="summary-content">
-      <span>Active products</span>
+      <span>{{ 'products.active' | translate }}</span>
       <strong>{{ activeProducts() }}</strong>
     </div>
 
@@ -53,7 +53,7 @@
     </div>
 
     <div class="summary-content">
-      <span>Inactive products</span>
+      <span>{{ 'products.inactive' | translate }}</span>
       <strong>{{ inactiveProducts() }}</strong>
     </div>
 

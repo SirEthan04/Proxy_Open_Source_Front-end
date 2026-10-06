@@ -1,8 +1,8 @@
 <h2 mat-dialog-title>
   @if (data.product) {
-    Edit product
+    {{ 'products.edit' | translate }}
   } @else {
-    New product
+    {{ 'products.new' | translate }}
   }
 </h2>
 
@@ -23,7 +23,7 @@
     type="button"
     (click)="onCancel()"
   >
-    Cancel
+    {{ 'common.cancel' | translate }}
   </button>
 
 </mat-dialog-actions>

@@ -1,3 +1,4 @@
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,11 +12,12 @@ import { ProductDialog, ProductDialogData } from '../../components/product-dialo
 
 @Component({
   selector: 'app-products',
-  imports: [ProductList, MatButtonModule, MatIconModule],
+  imports: [TranslatePipe, ProductList, MatButtonModule, MatIconModule],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
 export class Products implements OnInit {
+  readonly translate = inject(TranslateService);
   private readonly inventoryStore = inject(InventoryStore);
   private readonly dialog = inject(MatDialog);
 
@@ -51,7 +53,7 @@ export class Products implements OnInit {
   }
 
   onDelete(product: Product): void {
-    const confirmed = confirm(`Are you sure you want to delete "${product.name}"?`);
+    const confirmed = confirm(this.translate.instant('products.deleteConfirmation', { name: product.name }));
 
     if (!confirmed) {
       return;

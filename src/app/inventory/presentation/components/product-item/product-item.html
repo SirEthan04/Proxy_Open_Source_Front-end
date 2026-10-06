@@ -3,22 +3,22 @@
 
   <p>{{ product().description }}</p>
 
-  <p>Price: S/ {{ product().price }}</p>
+  <p>{{ 'common.price' | translate }}: S/ {{ product().price }}</p>
 
-  <p>Minimum stock: {{ product().minimumStock }}</p>
+  <p>{{ 'common.minimumStock' | translate }}: {{ product().minimumStock }}</p>
 
   <button
     type="button"
     (click)="onEdit()"
   >
-    Edit
+    {{ 'common.edit' | translate }}
   </button>
 
   <button
     type="button"
     (click)="onDelete()"
   >
-    Delete
+    {{ 'common.delete' | translate }}
   </button>
   <hr>
 

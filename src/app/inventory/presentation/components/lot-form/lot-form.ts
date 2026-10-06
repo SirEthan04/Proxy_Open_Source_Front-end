@@ -1,3 +1,4 @@
+import { TranslatePipe } from '@ngx-translate/core';
 import { Component, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,7 +28,7 @@ const nonBlank: ValidatorFn = (control) => {
 
 @Component({
   selector: 'app-lot-form',
-  imports: [
+  imports: [TranslatePipe,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

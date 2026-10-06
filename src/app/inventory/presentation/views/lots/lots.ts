@@ -1,3 +1,4 @@
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,11 +10,12 @@ import { LotDialog, LotDialogData } from '../../components/lot-dialog/lot-dialog
 
 @Component({
   selector: 'app-lots',
-  imports: [LotList, MatButtonModule, MatIconModule],
+  imports: [TranslatePipe, LotList, MatButtonModule, MatIconModule],
   templateUrl: './lots.html',
   styleUrl: './lots.css',
 })
 export class Lots implements OnInit {
+  readonly translate = inject(TranslateService);
   private readonly inventoryStore = inject(InventoryStore);
   private readonly dialog = inject(MatDialog);
   readonly lots = this.inventoryStore.lots;
@@ -40,7 +42,7 @@ export class Lots implements OnInit {
   }
 
   onDelete(lot: Lot): void {
-    if (confirm(`Are you sure you want to delete lot "${lot.batchNumber}"?`)) {
+    if (confirm(this.translate.instant('lots.deleteConfirmation', { batch: lot.batchNumber }))) {
       this.inventoryStore.deleteLot(lot.id);
     }
   }

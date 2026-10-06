@@ -4,13 +4,13 @@
   <header class="dashboard-header">
 
     <div>
-      <h1>Dashboard</h1>
+      <h1>{{ 'dashboard.title' | translate }}</h1>
 
       <p>
         @if (currentUser()) {
-        Bienvenido, {{ currentUser()?.name }}.
+        {{ 'dashboard.welcome' | translate: { name: currentUser()?.name } }}
         } @else {
-        Resumen general del inventario.
+        {{ 'dashboard.overview' | translate }}
         }
       </p>
     </div>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="summary-content">
-        <span>Total de productos</span>
+        <span>{{ 'products.total' | translate }}</span>
         <strong>{{ totalProducts() }}</strong>
       </div>
 
@@ -43,7 +43,7 @@
       </div>
 
       <div class="summary-content">
-        <span>Productos activos</span>
+        <span>{{ 'products.active' | translate }}</span>
         <strong>{{ activeProducts() }}</strong>
       </div>
 
@@ -58,7 +58,7 @@
       </div>
 
       <div class="summary-content">
-        <span>Productos inactivos</span>
+        <span>{{ 'products.inactive' | translate }}</span>
         <strong>{{ inactiveProducts() }}</strong>
       </div>
 
@@ -73,7 +73,7 @@
       </div>
 
       <div class="summary-content">
-        <span>Categorías</span>
+        <span>{{ 'dashboard.categories' | translate }}</span>
         <strong>{{ totalCategories() }}</strong>
       </div>
 
@@ -92,10 +92,10 @@
       <div class="section-header">
 
         <div>
-          <h2>Productos registrados</h2>
+          <h2>{{ 'dashboard.registeredProducts' | translate }}</h2>
 
           <p>
-            Vista general de los productos del inventario.
+            {{ 'dashboard.productsDescription' | translate }}
           </p>
         </div>
 
@@ -109,7 +109,7 @@
         <mat-icon>inventory_2</mat-icon>
 
         <p>
-          No hay productos registrados.
+          {{ 'dashboard.noProducts' | translate }}
         </p>
 
       </div>
@@ -140,7 +140,7 @@
             [class.active]="product.active"
             [class.inactive]="!product.active"
           >
-                {{ product.active ? 'Activo' : 'Inactivo' }}
+                {{ product.active ? ('common.active' | translate) : ('common.inactive' | translate) }}
               </span>
 
         </div>
@@ -159,10 +159,10 @@
       <div class="section-header">
 
         <div>
-          <h2>Productos por categoría</h2>
+          <h2>{{ 'dashboard.productsByCategory' | translate }}</h2>
 
           <p>
-            Distribución actual del catálogo.
+            {{ 'dashboard.distribution' | translate }}
           </p>
         </div>
 
@@ -176,7 +176,7 @@
         <mat-icon>category</mat-icon>
 
         <p>
-          No hay categorías registradas.
+          {{ 'dashboard.noCategories' | translate }}
         </p>
 
       </div>
