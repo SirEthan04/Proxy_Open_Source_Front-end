@@ -1,8 +1,46 @@
 <div class="app-layout">
+  <header class="mobile-header">
 
-  <aside class="sidebar">
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-label="Open navigation menu"
+      [attr.aria-expanded]="sidebarOpen()"
+      aria-controls="main-sidebar"
+      (click)="toggleSidebar()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <strong>BodeGo</strong>
+
+  </header>
+
+  @if (sidebarOpen()) {
+
+    <div
+      class="sidebar-backdrop"
+      (click)="closeSidebar()"
+      aria-hidden="true"
+    ></div>
+
+  }
+
+  <aside
+    id="main-sidebar"
+    class="sidebar"
+    [class.sidebar-open]="sidebarOpen()"
+  >
 
     <div class="sidebar-brand">
+      <button
+        type="button"
+        class="sidebar-close"
+        aria-label="Close navigation menu"
+        (click)="closeSidebar()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
 
       <div class="brand-icon">
         <mat-icon>inventory_2</mat-icon>
@@ -21,6 +59,7 @@
       <a
         routerLink="/dashboard"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <mat-icon>dashboard</mat-icon>
         <span>Dashboard</span>
@@ -30,6 +69,7 @@
       <a
         routerLink="/products"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <mat-icon>inventory_2</mat-icon>
         <span>Products</span>
@@ -39,6 +79,7 @@
       <a
         routerLink="/lots"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <mat-icon>layers</mat-icon>
         <span>Lots</span>
@@ -48,6 +89,7 @@
       <a
         routerLink="/movements"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <mat-icon>swap_horiz</mat-icon>
         <span>Movements</span>
@@ -57,6 +99,7 @@
       <a
         routerLink="/counts"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <mat-icon>fact_check</mat-icon>
         <span>Physical Counts</span>
@@ -66,6 +109,7 @@
       <a
         routerLink="/alerts"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <mat-icon>notifications</mat-icon>
         <span>Alerts</span>
@@ -79,6 +123,7 @@
       <a
         routerLink="/settings"
         routerLinkActive="active"
+        (click)="closeSidebar()"
       >
         <mat-icon>settings</mat-icon>
         <span>Settings</span>
