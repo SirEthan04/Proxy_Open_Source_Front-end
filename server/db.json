@@ -58,6 +58,62 @@
       "id": 4
     }
   ],
+  "lots": [
+    {
+      "id": 1,
+      "productId": 1,
+      "batchNumber": "CC-2026-001",
+      "quantity": 24,
+      "expirationDate": "2027-03-31",
+      "entryDate": "2026-10-01",
+      "active": true
+    },
+    {
+      "id": 2,
+      "productId": 1,
+      "batchNumber": "CC-2026-002",
+      "quantity": 12,
+      "expirationDate": "2027-06-30",
+      "entryDate": "2026-10-05",
+      "active": true
+    },
+    {
+      "id": 3,
+      "productId": 2,
+      "batchNumber": "AR-2026-001",
+      "quantity": 30,
+      "expirationDate": "2027-10-01",
+      "entryDate": "2026-10-01",
+      "active": true
+    },
+    {
+      "id": 4,
+      "productId": 3,
+      "batchNumber": "LG-2026-001",
+      "quantity": 18,
+      "expirationDate": "2027-02-28",
+      "entryDate": "2026-10-02",
+      "active": true
+    },
+    {
+      "id": 5,
+      "productId": 4,
+      "batchNumber": "OR-2026-001",
+      "quantity": 0,
+      "expirationDate": "2026-12-31",
+      "entryDate": "2026-09-15",
+      "active": false
+    },
+    {
+      "id": 6,
+      "productId": 4,
+      "batchNumber": "OR-2026-002",
+      "quantity": 16,
+      "expirationDate": "2027-04-30",
+      "entryDate": "2026-10-03",
+      "active": true
+    }
+  ],
   "users": [
     {
       "id": 1,
