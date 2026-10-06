@@ -4,6 +4,10 @@ import { Dashboard } from './views/dashboard/dashboard';
 
 export const inventoryRoutes: Routes = [
   {
+    path: 'lots',
+    loadComponent: () => import('./views/lots/lots').then((module) => module.Lots),
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

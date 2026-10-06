@@ -1,0 +1,47 @@
+<div class="lots-page">
+  <div class="lots-header">
+    <div>
+      <h1>Lots</h1>
+      <p>Manage the batches and quantities of your inventory products.</p>
+    </div>
+    <button mat-flat-button type="button" (click)="onCreate()">
+      <mat-icon>add</mat-icon>New lot
+    </button>
+  </div>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-icon"><mat-icon>layers</mat-icon></div>
+      <div class="summary-content">
+        <span>Total lots</span><strong>{{ totalLots() }}</strong>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon"><mat-icon>check_circle</mat-icon></div>
+      <div class="summary-content">
+        <span>Active lots</span><strong>{{ activeLots() }}</strong>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon"><mat-icon>pause_circle</mat-icon></div>
+      <div class="summary-content">
+        <span>Inactive lots</span><strong>{{ inactiveLots() }}</strong>
+      </div>
+    </div>
+  </div>
+  @if (error()) {
+    <div class="error-state">
+      <p role="alert">{{ error() }}</p>
+      <button mat-button type="button" (click)="reload()">Reload lots</button>
+    </div>
+  }
+  @if (loading()) {
+    <p role="status">Loading lots...</p>
+  } @else {
+    <app-lot-list
+      [lots]="lots()"
+      [products]="products()"
+      (edit)="onEdit($event)"
+      (remove)="onDelete($event)"
+    />
+  }
+</div>
