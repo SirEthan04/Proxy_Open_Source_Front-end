@@ -1,135 +1,221 @@
 <div class="dashboard-page">
 
-  <div class="dashboard-header">
+
+  <header class="dashboard-header">
 
     <div>
       <h1>Dashboard</h1>
 
       <p>
-        Overview of your inventory.
+        @if (currentUser()) {
+        Bienvenido, {{ currentUser()?.name }}.
+        } @else {
+        Resumen general del inventario.
+        }
       </p>
     </div>
 
-  </div>
+  </header>
 
 
-  <div class="summary-grid">
 
-    <div class="summary-card">
+  <section class="summary-grid">
+
+    <article class="summary-card">
 
       <div class="summary-icon">
         <mat-icon>inventory_2</mat-icon>
       </div>
 
       <div class="summary-content">
-        <span>Total products</span>
+        <span>Total de productos</span>
         <strong>{{ totalProducts() }}</strong>
       </div>
 
-    </div>
+    </article>
 
 
-    <div class="summary-card">
+
+    <article class="summary-card">
 
       <div class="summary-icon">
         <mat-icon>check_circle</mat-icon>
       </div>
 
       <div class="summary-content">
-        <span>Active products</span>
+        <span>Productos activos</span>
         <strong>{{ activeProducts() }}</strong>
       </div>
 
-    </div>
+    </article>
 
 
-    <div class="summary-card">
+
+    <article class="summary-card">
+
+      <div class="summary-icon">
+        <mat-icon>cancel</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Productos inactivos</span>
+        <strong>{{ inactiveProducts() }}</strong>
+      </div>
+
+    </article>
+
+
+
+    <article class="summary-card">
 
       <div class="summary-icon">
         <mat-icon>category</mat-icon>
       </div>
 
       <div class="summary-content">
-        <span>Categories</span>
+        <span>Categorías</span>
         <strong>{{ totalCategories() }}</strong>
       </div>
 
-    </div>
+    </article>
 
-  </div>
+  </section>
 
 
-  <section class="dashboard-section">
 
-    <div class="section-header">
+  <div class="dashboard-grid">
 
-      <div>
-        <h2>Inventory overview</h2>
 
-        <p>
-          Recently registered products.
-        </p>
+
+    <section class="dashboard-section">
+
+      <div class="section-header">
+
+        <div>
+          <h2>Productos registrados</h2>
+
+          <p>
+            Vista general de los productos del inventario.
+          </p>
+        </div>
+
       </div>
 
-    </div>
 
-
-    @if (recentProducts().length === 0) {
+      @if (displayedProducts().length === 0) {
 
       <div class="empty-state">
 
         <mat-icon>inventory_2</mat-icon>
 
         <p>
-          No products available.
+          No hay productos registrados.
         </p>
 
       </div>
 
-    } @else {
+      } @else {
 
       <div class="product-overview">
 
-        @for (
-          product of recentProducts();
-          track product.id
-          ) {
+        @for (product of displayedProducts(); track product.id) {
 
-          <div class="overview-item">
+        <div class="overview-item">
 
-            <div class="overview-product">
+          <div class="overview-product">
 
-              <strong>
-                {{ product.name }}
-              </strong>
+            <strong>
+              {{ product.name }}
+            </strong>
 
-              <span>
-                {{ getCategoryName(product.categoryId) }}
-              </span>
-
-            </div>
-
-
-            <span
-              class="status"
-              [class.active]="product.active"
-              [class.inactive]="!product.active"
-            >
-              {{
-                product.active
-                  ? 'Active'
-                  : 'Inactive'
-              }}
-            </span>
+            <span>
+                  {{ getCategoryName(product.categoryId) }}
+                </span>
 
           </div>
+
+
+          <span
+            class="status"
+            [class.active]="product.active"
+            [class.inactive]="!product.active"
+          >
+                {{ product.active ? 'Activo' : 'Inactivo' }}
+              </span>
+
+        </div>
 
         }
 
       </div>
 
-    }
+      }
 
-  </section>
+    </section>
+
+
+    <section class="dashboard-section">
+
+      <div class="section-header">
+
+        <div>
+          <h2>Productos por categoría</h2>
+
+          <p>
+            Distribución actual del catálogo.
+          </p>
+        </div>
+
+      </div>
+
+
+      @if (productsByCategory().length === 0) {
+
+      <div class="empty-state">
+
+        <mat-icon>category</mat-icon>
+
+        <p>
+          No hay categorías registradas.
+        </p>
+
+      </div>
+
+      } @else {
+
+      <div class="category-overview">
+
+        @for (
+        category of productsByCategory();
+        track category.id
+        ) {
+
+        <div class="category-item">
+
+          <div class="category-info">
+
+            <mat-icon>folder</mat-icon>
+
+            <span>
+                  {{ category.name }}
+                </span>
+
+          </div>
+
+          <strong>
+            {{ category.total }}
+          </strong>
+
+        </div>
+
+        }
+
+      </div>
+
+      }
+
+    </section>
+
+  </div>
 
 </div>
