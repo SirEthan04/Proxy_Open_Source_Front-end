@@ -16,6 +16,10 @@ export const inventoryRoutes: Routes = [
     loadComponent: () => import('./views/movements/movements').then((module) => module.Movements),
   },
   {
+    path: 'physical-counts',
+    loadComponent: () => import('./views/physical-counts/physical-counts').then((module) => module.PhysicalCounts),
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

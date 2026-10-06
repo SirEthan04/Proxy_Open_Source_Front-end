@@ -12,6 +12,9 @@ import { InventoryMovementApi } from '../infrastructure/inventory-movement-api';
 import { Alert } from '../domain/model/alert.entity';
 import { AlertApi } from '../infrastructure/alert-api';
 import { forkJoin, of } from 'rxjs';
+import { PhysicalCount } from '../domain/model/physical-count.entity';
+import { PhysicalCountApi } from '../infrastructure/physical-count-api';
+import { User } from '../../iam/domain/model/user.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +25,7 @@ export class InventoryStore {
   private readonly lotApi = inject(LotApi);
   private readonly movementApi = inject(InventoryMovementApi);
   private readonly alertApi = inject(AlertApi);
+  private readonly physicalCountApi = inject(PhysicalCountApi);
 
   private readonly productsSignal = signal<Product[]>([]);
   private readonly categoriesSignal = signal<Category[]>([]);
@@ -34,6 +38,10 @@ export class InventoryStore {
   private readonly alertsSignal = signal<Alert[]>([]);
   private readonly alertsLoadingSignal = signal(false);
   private readonly alertsErrorSignal = signal<string | null>(null);
+  private readonly physicalCountsSignal = signal<PhysicalCount[]>([]);
+  private readonly physicalCountsLoadingSignal = signal(false);
+  private readonly physicalCountsErrorSignal = signal<string | null>(null);
+  private readonly usersSignal = signal<User[]>([]);
 
   readonly products = this.productsSignal.asReadonly();
   readonly categories = this.categoriesSignal.asReadonly();
@@ -46,6 +54,34 @@ export class InventoryStore {
   readonly alerts = this.alertsSignal.asReadonly();
   readonly alertsLoading = this.alertsLoadingSignal.asReadonly();
   readonly alertsError = this.alertsErrorSignal.asReadonly();
+  readonly physicalCounts = this.physicalCountsSignal.asReadonly();
+  readonly physicalCountsLoading = this.physicalCountsLoadingSignal.asReadonly();
+  readonly physicalCountsError = this.physicalCountsErrorSignal.asReadonly();
+  readonly users = this.usersSignal.asReadonly();
+
+  loadPhysicalCounts(): void {
+    this.physicalCountsLoadingSignal.set(true);
+    this.physicalCountsErrorSignal.set(null);
+    this.physicalCountApi.getAll().subscribe({
+      next: (counts) => { this.physicalCountsSignal.set(counts); this.physicalCountsLoadingSignal.set(false); },
+      error: () => { this.physicalCountsLoadingSignal.set(false); this.physicalCountsErrorSignal.set('Could not load physical counts. Please try again.'); },
+    });
+  }
+
+  createPhysicalCount(count: PhysicalCount): void {
+    this.physicalCountsErrorSignal.set(null);
+    this.physicalCountApi.create(count).subscribe({
+      next: (created) => this.physicalCountsSignal.update((counts) => [created, ...counts]),
+      error: () => this.physicalCountsErrorSignal.set('Could not create the physical count. Please try again.'),
+    });
+  }
+
+  loadUsers(): void {
+    this.physicalCountApi.getUsers().subscribe({
+      next: (users) => this.usersSignal.set(users),
+      error: () => this.usersSignal.set([]),
+    });
+  }
 
   loadAlerts(): void {
     this.alertsLoadingSignal.set(true);
