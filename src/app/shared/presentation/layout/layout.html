@@ -120,14 +120,56 @@
 
     <div class="sidebar-footer">
 
-      <a
-        routerLink="/settings"
-        routerLinkActive="active"
-        (click)="closeSidebar()"
+      @if (currentUser(); as user) {
+
+        <div class="user-info">
+
+          <div class="user-avatar">
+            {{ user.name.charAt(0).toUpperCase() }}
+          </div>
+
+          <div class="user-details">
+
+            <strong>
+              {{ user.name }}
+            </strong>
+
+            <span>
+          {{ user.role === 'ADMIN'
+              ? 'Administrator'
+              : 'Employee'
+              }}
+        </span>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      @if (isAdmin()) {
+
+        <a
+          routerLink="/settings"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </a>
+
+      }
+
+
+      <button
+        type="button"
+        class="sign-out-button"
+        (click)="signOut()"
       >
-        <mat-icon>settings</mat-icon>
-        <span>Settings</span>
-      </a>
+        <mat-icon>logout</mat-icon>
+        <span>Sign out</span>
+      </button>
 
     </div>
 
