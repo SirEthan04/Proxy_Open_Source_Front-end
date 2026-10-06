@@ -4,6 +4,10 @@ import { Dashboard } from './views/dashboard/dashboard';
 
 export const inventoryRoutes: Routes = [
   {
+    path: 'alerts',
+    loadComponent: () => import('./views/alerts/alerts').then((module) => module.Alerts),
+  },
+  {
     path: 'lots',
     loadComponent: () => import('./views/lots/lots').then((module) => module.Lots),
   },
