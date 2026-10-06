@@ -150,6 +150,7 @@
     }
   ],
   "movements": [],
+<<<<<<< HEAD
   "physicalCounts": [
     {
       "lotId": 3,
@@ -175,3 +176,8 @@
     }
   ]
 }
+=======
+  "physicalCounts": [],
+  "alerts": []
+}
+>>>>>>> 9d1716863aaa72b25900d58047a642a5c38941b7
