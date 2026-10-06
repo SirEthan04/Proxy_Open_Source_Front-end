@@ -78,26 +78,38 @@
     {
       "id": 1,
       "productId": 1,
-      "code": "LOT-001",
-      "quantity": 40
+      "batchNumber": "LOT-001",
+      "quantity": 40,
+      "expirationDate": null,
+      "entryDate": "2026-10-01",
+      "active": true
     },
     {
       "id": 2,
       "productId": 2,
-      "code": "LOT-002",
-      "quantity": 25
+      "batchNumber": "LOT-002",
+      "quantity": 25,
+      "expirationDate": null,
+      "entryDate": "2026-10-02",
+      "active": true
     },
     {
       "id": 3,
       "productId": 3,
-      "code": "LOT-003",
-      "quantity": 30
+      "batchNumber": "LOT-003",
+      "quantity": 30,
+      "expirationDate": null,
+      "entryDate": "2026-10-02",
+      "active": true
     },
     {
       "id": 4,
       "productId": 4,
-      "code": "LOT-004",
-      "quantity": 18
+      "batchNumber": "LOT-004",
+      "quantity": 18,
+      "expirationDate": null,
+      "entryDate": "2026-10-03",
+      "active": true
     }
   ],
   "movements": [

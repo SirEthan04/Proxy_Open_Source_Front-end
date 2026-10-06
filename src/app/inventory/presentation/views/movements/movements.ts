@@ -35,7 +35,7 @@ export class Movements implements OnInit {
     return this.movements().filter(movement => {
       const lot = this.lots().find(item => item.id === movement.lotId);
       const product = this.products().find(item => item.id === lot?.productId);
-      const text = `${product?.name ?? ''} ${lot?.code ?? ''} ${movement.reason}`.toLocaleLowerCase();
+      const text = `${product?.name ?? ''} ${lot?.batchNumber ?? ''} ${movement.reason}`.toLocaleLowerCase();
       return (!type || movement.type === type) && (!query || text.includes(query));
     }).sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id);
   });
@@ -56,7 +56,7 @@ export class Movements implements OnInit {
     const lot = this.lots().find(item => item.id === lotId);
     if (!lot) return `Lote ${lotId}`;
     const product = this.products().find(item => item.id === lot.productId);
-    return `${product?.name ?? `Producto ${lot.productId}`} — ${lot.code || `Lote ${lot.id}`}`;
+    return `${product?.name ?? `Producto ${lot.productId}`} — ${lot.batchNumber || `Lote ${lot.id}`}`;
   }
   typeLabel(type: string): string { return ({ ENTRY: 'Entrada', EXIT: 'Salida', ADJUSTMENT: 'Ajuste' } as Record<string, string>)[type] ?? type; }
   private currentUserId(): number | null {

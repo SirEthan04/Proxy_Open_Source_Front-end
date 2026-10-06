@@ -21,7 +21,7 @@ export interface MovementDialogData { lots: Lot[]; products: Product[]; }
         <mat-form-field appearance="outline"><mat-label>Lote</mat-label>
           <mat-select formControlName="lotId" required>
             @for (lot of data.lots; track lot.id) {
-              <mat-option [value]="lot.id">{{ productName(lot.productId) }} — {{ lot.code || ('Lote ' + lot.id) }}</mat-option>
+              <mat-option [value]="lot.id">{{ productName(lot.productId) }} — {{ lot.batchNumber || ('Lote ' + lot.id) }}</mat-option>
             }
           </mat-select>
           @if (form.controls.lotId.hasError('required')) { <mat-error>Selecciona un lote.</mat-error> }

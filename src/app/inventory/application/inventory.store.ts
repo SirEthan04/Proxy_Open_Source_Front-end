@@ -22,15 +22,57 @@ export class InventoryStore {
   private readonly productsSignal = signal<Product[]>([]);
   private readonly categoriesSignal = signal<Category[]>([]);
   private readonly lotsSignal = signal<Lot[]>([]);
+  private readonly lotsLoadingSignal = signal(false);
+  private readonly lotsErrorSignal = signal<string | null>(null);
   private readonly movementsSignal = signal<InventoryMovement[]>([]);
 
   readonly products = this.productsSignal.asReadonly();
   readonly categories = this.categoriesSignal.asReadonly();
   readonly lots = this.lotsSignal.asReadonly();
+  readonly lotsLoading = this.lotsLoadingSignal.asReadonly();
+  readonly lotsError = this.lotsErrorSignal.asReadonly();
   readonly movements = this.movementsSignal.asReadonly();
 
   loadLots(): void {
-    this.lotApi.getAll().subscribe({ next: lots => this.lotsSignal.set(lots), error: error => console.error('Error loading lots:', error) });
+    this.lotsLoadingSignal.set(true);
+    this.lotsErrorSignal.set(null);
+    this.lotApi.getAll().subscribe({
+      next: (lots) => {
+        this.lotsSignal.set(lots);
+        this.lotsLoadingSignal.set(false);
+      },
+      error: () => {
+        this.lotsLoadingSignal.set(false);
+        this.lotsErrorSignal.set('Could not load lots. Please try again.');
+      },
+    });
+  }
+
+  createLot(lot: Lot): void {
+    this.lotsErrorSignal.set(null);
+    this.lotApi.create(lot).subscribe({
+      next: (createdLot) => this.lotsSignal.update((lots) => [...lots, createdLot]),
+      error: () => this.lotsErrorSignal.set('Could not create the lot. Please try again.'),
+    });
+  }
+
+  updateLot(lot: Lot): void {
+    this.lotsErrorSignal.set(null);
+    this.lotApi.update(lot).subscribe({
+      next: (updatedLot) =>
+        this.lotsSignal.update((lots) =>
+          lots.map((currentLot) => (currentLot.id === updatedLot.id ? updatedLot : currentLot)),
+        ),
+      error: () => this.lotsErrorSignal.set('Could not update the lot. Please try again.'),
+    });
+  }
+
+  deleteLot(id: number): void {
+    this.lotsErrorSignal.set(null);
+    this.lotApi.delete(id).subscribe({
+      next: () => this.lotsSignal.update((lots) => lots.filter((lot) => lot.id !== id)),
+      error: () => this.lotsErrorSignal.set('Could not delete the lot. Please try again.'),
+    });
   }
 
   loadMovements(): void {
