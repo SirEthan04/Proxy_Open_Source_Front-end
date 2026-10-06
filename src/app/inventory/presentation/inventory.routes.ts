@@ -8,6 +8,10 @@ export const inventoryRoutes: Routes = [
     loadComponent: () => import('./views/lots/lots').then((module) => module.Lots),
   },
   {
+    path: 'movements',
+    loadComponent: () => import('./views/movements/movements').then((module) => module.Movements),
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
