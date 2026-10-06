@@ -126,7 +126,7 @@
     {
       "productId": 5,
       "batchNumber": "AM-2026-067",
-      "quantity": 9,
+      "quantity": 69,
       "expirationDate": "2069-05-04",
       "entryDate": "2067-05-04",
       "active": true,
@@ -150,5 +150,16 @@
     }
   ],
   "movements": [],
-  "alerts": []
+  "alerts": [
+    {
+      "productId": 5,
+      "lotId": null,
+      "type": "LOW_STOCK",
+      "level": "WARNING",
+      "message": "Available stock (9) is at or below the minimum (67).",
+      "generatedAt": "2026-10-06T05:36:45.788Z",
+      "attended": true,
+      "id": 1
+    }
+  ]
 }
