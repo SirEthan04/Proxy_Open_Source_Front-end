@@ -9,6 +9,9 @@ import { Lot } from '../domain/model/lot.entity';
 import { LotApi } from '../infrastructure/lot-api';
 import { InventoryMovement } from '../domain/model/inventory-movement.entity';
 import { InventoryMovementApi } from '../infrastructure/inventory-movement-api';
+import { Alert } from '../domain/model/alert.entity';
+import { AlertApi } from '../infrastructure/alert-api';
+import { forkJoin, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +21,7 @@ export class InventoryStore {
   private readonly categoryApi = inject(CategoryApi);
   private readonly lotApi = inject(LotApi);
   private readonly movementApi = inject(InventoryMovementApi);
+  private readonly alertApi = inject(AlertApi);
 
   private readonly productsSignal = signal<Product[]>([]);
   private readonly categoriesSignal = signal<Category[]>([]);
@@ -27,6 +31,9 @@ export class InventoryStore {
   private readonly movementsSignal = signal<InventoryMovement[]>([]);
   private readonly movementsLoadingSignal = signal(false);
   private readonly movementsErrorSignal = signal<string | null>(null);
+  private readonly alertsSignal = signal<Alert[]>([]);
+  private readonly alertsLoadingSignal = signal(false);
+  private readonly alertsErrorSignal = signal<string | null>(null);
 
   readonly products = this.productsSignal.asReadonly();
   readonly categories = this.categoriesSignal.asReadonly();
@@ -36,6 +43,68 @@ export class InventoryStore {
   readonly movements = this.movementsSignal.asReadonly();
   readonly movementsLoading = this.movementsLoadingSignal.asReadonly();
   readonly movementsError = this.movementsErrorSignal.asReadonly();
+  readonly alerts = this.alertsSignal.asReadonly();
+  readonly alertsLoading = this.alertsLoadingSignal.asReadonly();
+  readonly alertsError = this.alertsErrorSignal.asReadonly();
+
+  loadAlerts(): void {
+    this.alertsLoadingSignal.set(true);
+    this.alertsErrorSignal.set(null);
+    forkJoin({ alerts: this.alertApi.getAll(), products: this.productApi.getAll(), lots: this.lotApi.getAll() }).subscribe({
+      next: ({ alerts, products, lots }) => {
+        this.productsSignal.set(products);
+        this.lotsSignal.set(lots);
+        const existingKeys = new Set(alerts.map((alert) => this.alertKey(alert.type, alert.productId, alert.lotId)));
+        const today = new Date().toISOString().slice(0, 10);
+        const generatedAt = new Date().toISOString();
+        const candidates: Alert[] = [];
+        for (const product of products.filter((item) => item.active)) {
+          const productLots = lots.filter((lot) => lot.active && lot.productId === product.id);
+          const stock = productLots.reduce((total, lot) => total + lot.quantity, 0);
+          if (stock <= product.minimumStock) {
+            const key = this.alertKey('LOW_STOCK', product.id, null);
+            if (!existingKeys.has(key)) {
+              candidates.push(new Alert(0, product.id, null, 'LOW_STOCK', 'WARNING', `Available stock (${stock}) is at or below the minimum (${product.minimumStock}).`, generatedAt, false));
+              existingKeys.add(key);
+            }
+          }
+        }
+        for (const lot of lots.filter((item) => item.active && item.expirationDate && item.expirationDate < today)) {
+          const key = this.alertKey('EXPIRED', lot.productId, lot.id);
+          if (!existingKeys.has(key)) {
+            candidates.push(new Alert(0, lot.productId, lot.id, 'EXPIRED', 'CRITICAL', `Lot ${lot.batchNumber} expired on ${lot.expirationDate}.`, generatedAt, false));
+            existingKeys.add(key);
+          }
+        }
+        (candidates.length ? forkJoin(candidates.map((alert) => this.alertApi.create(alert))) : of([])).subscribe({
+          next: (created) => {
+            this.alertsSignal.set([...alerts, ...created].sort((a, b) => b.generatedAt.localeCompare(a.generatedAt) || b.id - a.id));
+            this.alertsLoadingSignal.set(false);
+          },
+          error: () => {
+            this.alertsSignal.set(alerts);
+            this.alertsErrorSignal.set('Could not generate inventory alerts. Please try again.');
+            this.alertsLoadingSignal.set(false);
+          },
+        });
+      },
+      error: () => {
+        this.alertsErrorSignal.set('Could not load alerts. Please try again.');
+        this.alertsLoadingSignal.set(false);
+      },
+    });
+  }
+
+  attendAlert(alert: Alert): void {
+    this.alertApi.update(new Alert(alert.id, alert.productId, alert.lotId, alert.type, alert.level, alert.message, alert.generatedAt, true)).subscribe({
+      next: (updated) => this.alertsSignal.update((alerts) => alerts.map((item) => item.id === updated.id ? updated : item)),
+      error: () => this.alertsErrorSignal.set('Could not update the alert. Please try again.'),
+    });
+  }
+
+  private alertKey(type: string, productId: number | null, lotId: number | null): string {
+    return `${type}:${productId ?? ''}:${lotId ?? ''}`;
+  }
 
   loadMovements(): void {
     this.movementsLoadingSignal.set(true);
